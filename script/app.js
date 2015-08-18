@@ -59,7 +59,7 @@ officeJsSnippetApp.controller("SamplesController", function($scope, snippetFacto
 	$scope.selectedSample = { description: "No sample loaded" };
 	$scope.insideOffice = insideOffice;
 	
-	MonacoEditorIntegration.initializeJsEditor('TxtRichApiScript', [
+	CodeEditorIntegration.initializeJsEditor('TxtRichApiScript', [
 			"/excel/script/EditorIntelliSense/ExcelLatest.txt",
 			"/excel/script/EditorIntelliSense/WordLatest.txt",
 			"/excel/script/EditorIntelliSense/Office.Runtime.txt",
@@ -67,7 +67,7 @@ officeJsSnippetApp.controller("SamplesController", function($scope, snippetFacto
 			"/excel/script/EditorIntelliSense/jquery.txt",
 		]);
 	
-	MonacoEditorIntegration.setDirty = function() {
+	CodeEditorIntegration.setDirty = function() {
 		if ($scope.selectedSample.code) {
 			$scope.selectedSample = { description: $scope.selectedSample.description + " (modified)" };
 			$scope.$apply();
@@ -84,13 +84,13 @@ officeJsSnippetApp.controller("SamplesController", function($scope, snippetFacto
 		snippetFactory.getSampleCode($scope.selectedSample.filename).then(function (response) {
 			$scope.selectedSample.code = addErrorHandlingIfNeeded(response.data);
 			$scope.insideOffice = insideOffice;
-			MonacoEditorIntegration.setJavaScriptText($scope.selectedSample.code);
-			MonacoEditorIntegration.resizeEditor();
+			CodeEditorIntegration.setJavaScriptText($scope.selectedSample.code);
+			CodeEditorIntegration.resizeEditor();
 		});
 	};
 	
 	$scope.runSelectedSample = function() {
-		var script = MonacoEditorIntegration.getJavaScriptToRun().replace(/console.log/g, "logComment");
+		var script = CodeEditorIntegration.getJavaScriptToRun().replace(/console.log/g, "logComment");
 		try {
 			eval(script);
 		} catch (e) {

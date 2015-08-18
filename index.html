@@ -5,15 +5,23 @@
 		<!-- script for enabling the Monaco text editor -->
 		<link rel="stylesheet" type="text/css" media="screen" data-name="vs/editor/editor.main" href="http://robmhoward.github.io/excel/script/vs/editor/editor.main.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="http://robmhoward.github.io/excel/script/vs/editor/css/vs-theme.css" />
+
+		<script type="text/javascript" src="http://robmhoward.github.io/excel/script/vs/loader.js"></script>
 		<script type="text/javascript">
-			var require = {
-				baseUrl: "script"
+			require.config({
+				baseUrl: "http://robmhoward.github.io/excel/script/"
+			});
+			
+			// Before loading vs/editor/editor.main, define a global MonacoEnvironment that overwrites
+			// the default worker url location (used when creating WebWorkers). The problem here is that
+			// HTML5 does not (yet) allow cross-domain web workers, so we need to proxy the instantion of
+			// a web worker through a same-domain script
+			window.MonacoEnvironment = {
+				getWorkerUrl: function(workerId, label) {
+					return 'worker-loader-proxy.js?label=' + label;
+				}
 			};
 		</script>
-		<script type="text/javascript" src="http://robmhoward.github.io/excel/script/vs/loader.js"></script>
-		<script type="text/javascript" src="http://robmhoward.github.io/excel/script/vs/editor/editor.main.nls.js"></script>
-		<script type="text/javascript" src="http://robmhoward.github.io/excel/script/vs/editor/editor.main.js"></script>
-		<script type="text/javascript" src="http://robmhoward.github.io/excel/script/vs/languages/javascript/javascript.js"></script>
 		
 		<script type="text/javascript">
 		    var appInsights=window.appInsights||function(config){

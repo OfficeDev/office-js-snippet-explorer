@@ -35,6 +35,7 @@ var CodeEditorIntegration;
         }
 
         require([
+            'vs/editor/editor.main',
             'vs/platform/platform',
             'vs/editor/modes/modesExtensions'
         ], function (Platform, ModesExt) {
