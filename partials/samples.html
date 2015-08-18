@@ -1,0 +1,20 @@
+<div id="samplesContainer" class="container" style="overflow: hidden; display:flex; flex-direction: column; position: absolute; top:0px; bottom: 0px; left: 0px; right: 0px; padding: 10px;">
+	<div>
+		<select ng-model="selectedGroup" ng-options="group.name for group in groups">
+			<option value="">-- choose a group --</option>
+		</select>
+		<a href="#/testAll" style="text-decoration: none;">-</a>
+		<select ng-change="loadSampleCode()" ng-model="selectedSample" ng-options="sample.name for sample in samples | filter:{group: selectedGroup.name}">
+			<option value="">-- choose a sample --</option>
+		</select> 
+	</div>
+	<div>
+		<p><button id="runButton" ng-hide="!insideOffice" ng-click="runSelectedSample()">Run!</button> <span>{{selectedSample.description}}</span></p>
+	</div>
+	<div style="flex-grow: 1; overflow: hidden" id="TxtRichApiScript">
+	
+	</div>
+	<div ng-hide="!insideOffice">
+		<textarea style="width:100%; height:150px;" id="console"></textarea>
+	</div>
+</div>
