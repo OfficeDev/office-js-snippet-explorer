@@ -2,6 +2,8 @@ var officeJsSnippetApp = angular.module("officeJsSnippetApp", ['ngRoute']);
 var insideOffice = false;
 var consoleErrorFunction;
 
+var rootUrl = document.location;
+
 var logComment = function(message) {
 	var consoleElement;
 	consoleElement = document.getElementById('console');
@@ -59,6 +61,7 @@ officeJsSnippetApp.controller("SamplesController", function($scope, snippetFacto
 	
 	MonacoEditorIntegration.initializeJsEditor('TxtRichApiScript', [
 			"/excel/script/EditorIntelliSense/ExcelLatest.txt",
+			"/excel/script/EditorIntelliSense/WordLatest.txt",
 			"/excel/script/EditorIntelliSense/Office.Runtime.txt",
 			"/excel/script/EditorIntelliSense/Helpers.txt",
 			"/excel/script/EditorIntelliSense/jquery.txt",
