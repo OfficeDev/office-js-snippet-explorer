@@ -1,6 +1,6 @@
 var CodeEditorIntegration;
 (function (CodeEditorIntegration) {
-    var localStorageKey = 'excel-api-samples';
+    var localStorageKey = 'office-js-snippets';
     var jsCodeEditor;
 
     function initializeJsEditor(textAreaId, intellisensePaths) {
@@ -58,11 +58,6 @@ var CodeEditorIntegration;
 
     function setJavaScriptText(text) {
         require(["vs/editor/contrib/snippet/snippet"], function (snippet) {
-            //jsCodeEditor.setSelection(jsCodeEditor.getModel().getFullModelRange(), false);
-            //snippet.InsertSnippetHelper.run(jsCodeEditor, jsCodeEditor.getHandlerService(), new snippet.CodeSnippet(text));
-            //jsCodeEditor.setSelection({ startColumn: 0, endColumn: 0, startLineNumber: 0, endLineNumber: 0 }, true);
-            //jsCodeEditor.focus();
-            
             jsCodeEditor.setSelection(jsCodeEditor.getModel().getFullModelRange());
             snippet.get(jsCodeEditor).run(new snippet.CodeSnippet(text), 0, 0);
             jsCodeEditor.setPosition({ lineNumber: 0, column: 0 });
