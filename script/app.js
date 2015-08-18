@@ -1,4 +1,4 @@
-var excelSamplesApp = angular.module("excelSamplesApp", ['ngRoute']);
+var officeJsSnippetApp = angular.module("officeJsSnippetApp", ['ngRoute']);
 var insideOffice = false;
 var consoleErrorFunction;
 
@@ -23,7 +23,7 @@ Office.initialize = function (reason) {
     }); 
 };
 
-excelSamplesApp.config(['$routeProvider', function ($routeProvider) {
+officeJsSnippetApp.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
 		.when('/samples',
 			{
@@ -38,7 +38,7 @@ excelSamplesApp.config(['$routeProvider', function ($routeProvider) {
 		.otherwise({redirectTo: '/samples' });
 }]);
 
-excelSamplesApp.factory("excelSamplesFactory", ['$http', function ($http) {
+officeJsSnippetApp.factory("snippetFactory", ['$http', function ($http) {
 	var factory = {};
 	
 	factory.getSamples = function() {
@@ -52,7 +52,7 @@ excelSamplesApp.factory("excelSamplesFactory", ['$http', function ($http) {
 	return factory;
 }]);
 
-excelSamplesApp.controller("SamplesController", function($scope, excelSamplesFactory) {
+officeJsSnippetApp.controller("SamplesController", function($scope, snippetFactory) {
 	$scope.samples = [{ name: "Loading..." }];
 	$scope.selectedSample = { description: "No sample loaded" };
 	$scope.insideOffice = insideOffice;
@@ -71,14 +71,14 @@ excelSamplesApp.controller("SamplesController", function($scope, excelSamplesFac
 		}
 	}
 	
-	excelSamplesFactory.getSamples().then(function (response) {
+	snippetFactory.getSamples().then(function (response) {
 		$scope.samples = response.data.values;
 		$scope.groups = response.data.groups;
 	});
 
 	$scope.loadSampleCode = function() {
 		appInsights.trackEvent("SampleLoaded", {name:$scope.selectedSample.name});
-		excelSamplesFactory.getSampleCode($scope.selectedSample.filename).then(function (response) {
+		snippetFactory.getSampleCode($scope.selectedSample.filename).then(function (response) {
 			$scope.selectedSample.code = addErrorHandlingIfNeeded(response.data);
 			$scope.insideOffice = insideOffice;
 			MonacoEditorIntegration.setJavaScriptText($scope.selectedSample.code);
@@ -98,10 +98,10 @@ excelSamplesApp.controller("SamplesController", function($scope, excelSamplesFac
 });
 
 
-excelSamplesApp.controller("TestAllController", function($scope, $q, excelSamplesFactory) {
+officeJsSnippetApp.controller("TestAllController", function($scope, $q, snippetFactory) {
 	$scope.insideOffice = insideOffice;
 
-	excelSamplesFactory.getSamples().then(function (response) {
+	snippetFactory.getSamples().then(function (response) {
 		$scope.samples = response.data.values;
 		$scope.groups = response.data.groups;
 	});
@@ -133,7 +133,7 @@ excelSamplesApp.controller("TestAllController", function($scope, $q, excelSample
 				var deferred = $q.defer();
 				//logComment("running next call");
 				sample.runStatus = "Loading";
-				excelSamplesFactory.getSampleCode(sample.filename).then(function (response) {
+				snippetFactory.getSampleCode(sample.filename).then(function (response) {
 					sample.code = addTestResults(addDeferredErrorHandling(response.data)).replace(/console.log/g, "logComment");
 					sample.runStatus = "Running";
 					try {
