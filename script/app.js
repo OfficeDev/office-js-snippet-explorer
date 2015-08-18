@@ -27,7 +27,7 @@ Office.initialize = function (reason) {
 
 officeJsSnippetApp.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
-		.when('/samples',
+		.when('/snippets/:app',
 			{
 				controller: 'SamplesController',
 				templateUrl: 'partials/samples.html'
@@ -37,34 +37,34 @@ officeJsSnippetApp.config(['$routeProvider', function ($routeProvider) {
 				controller: 'TestAllController',
 				templateUrl: 'partials/testAll.html'
 			})
-		.otherwise({redirectTo: '/samples' });
+		.otherwise({redirectTo: '/snippets/excel' });
 }]);
 
 officeJsSnippetApp.factory("snippetFactory", ['$http', function ($http) {
 	var factory = {};
 	
-	factory.getSamples = function() {
-		return $http.get('samples/samples.json');
+	factory.getSamples = function(app) {
+		return $http.get(app + '-snippets/samples.json');
 	};
 
-	factory.getSampleCode = function(filename) {
-		return $http.get('samples/' + filename);
+	factory.getSampleCode = function(app, filename) {
+		return $http.get(app + '-snippets/' + filename);
 	};
 
 	return factory;
 }]);
 
-officeJsSnippetApp.controller("SamplesController", function($scope, snippetFactory) {
+officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams, snippetFactory) {
 	$scope.samples = [{ name: "Loading..." }];
 	$scope.selectedSample = { description: "No sample loaded" };
 	$scope.insideOffice = insideOffice;
 	
 	CodeEditorIntegration.initializeJsEditor('TxtRichApiScript', [
-			"/excel/script/EditorIntelliSense/ExcelLatest.txt",
-			"/excel/script/EditorIntelliSense/WordLatest.txt",
-			"/excel/script/EditorIntelliSense/Office.Runtime.txt",
-			"/excel/script/EditorIntelliSense/Helpers.txt",
-			"/excel/script/EditorIntelliSense/jquery.txt",
+			"/editorIntelliSense/ExcelLatest.txt",
+			//"http://robmhoward.github.local:1920/script/EditorIntelliSense/WordLatest.txt",
+			"/editorIntelliSense/Office.Runtime.txt",
+			"/editorIntelliSense/Helpers.txt",
+			"/editorIntelliSense/jquery.txt",
 		]);
 	
 	CodeEditorIntegration.setDirty = function() {
@@ -74,14 +74,14 @@ officeJsSnippetApp.controller("SamplesController", function($scope, snippetFacto
 		}
 	}
 	
-	snippetFactory.getSamples().then(function (response) {
+	snippetFactory.getSamples($routeParams["app"]).then(function (response) {
 		$scope.samples = response.data.values;
 		$scope.groups = response.data.groups;
 	});
 
 	$scope.loadSampleCode = function() {
 		appInsights.trackEvent("SampleLoaded", {name:$scope.selectedSample.name});
-		snippetFactory.getSampleCode($scope.selectedSample.filename).then(function (response) {
+		snippetFactory.getSampleCode($routeParams["app"], $scope.selectedSample.filename).then(function (response) {
 			$scope.selectedSample.code = addErrorHandlingIfNeeded(response.data);
 			$scope.insideOffice = insideOffice;
 			CodeEditorIntegration.setJavaScriptText($scope.selectedSample.code);
@@ -99,7 +99,6 @@ officeJsSnippetApp.controller("SamplesController", function($scope, snippetFacto
 	}
 
 });
-
 
 officeJsSnippetApp.controller("TestAllController", function($scope, $q, snippetFactory) {
 	$scope.insideOffice = insideOffice;
@@ -147,7 +146,6 @@ officeJsSnippetApp.controller("TestAllController", function($scope, $q, snippetF
 						deferred.resolve();
 					}
 				});
-				
 				
 				return deferred.promise;
 			}

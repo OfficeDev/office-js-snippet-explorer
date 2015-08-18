@@ -1,0 +1,29 @@
+﻿declare module ExcelTest {
+	export function reportError(errorInfo: OfficeExtension.ErrorInfo): void {
+	}
+	export function reportJQueryError(xhr: JQueryXHR): void {
+	}
+
+	export class Settings {
+		baseUri: string;
+	}
+
+	var settings: Settings;
+}
+
+declare module WordTest {
+	export function reportError(errorInfo: OfficeExtension.ErrorInfo): void {
+	}
+}
+
+declare module RichApiTest {
+	class Logger {
+		public comment(message: string): void;
+		public clear(): void;
+		public clearDone(): void;
+		public done(success: boolean): void;
+		public fail(message?: string): void;
+		public pass(message?: string): void;
+	}
+	var log: Logger;
+}

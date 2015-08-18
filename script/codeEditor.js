@@ -9,41 +9,41 @@ var CodeEditorIntegration;
             defaultJsText = window.localStorage[localStorageKey];
         }
 
-        var editorMode = 'text/typescript';
-        jsCodeEditor = Monaco.Editor.create(document.getElementById(textAreaId), {
-            value: defaultJsText,
-            mode: editorMode,
-            wrappingColumn: 0,
-            tabSize: 4,
-            insertSpaces: false
-        });
-        document.getElementById(textAreaId).addEventListener('keyup', function () {
-            storeCurrentJSBuffer();
-        });
-
-        if (window.parent.document.location.protocol == "file:") {
-            intellisensePaths = [];
-        } else {
-            intellisensePaths = intellisensePaths.map(function (path) {
-                if (path.indexOf("?") < 0) {
-                    path += '?';
+        require(['vs/editor/editor.main'], function () {
+                var editorMode = 'text/typescript';
+                jsCodeEditor = Monaco.Editor.create(document.getElementById(textAreaId), {
+                    value: defaultJsText,
+                    mode: editorMode,
+                    wrappingColumn: 0,
+                    tabSize: 4,
+                    insertSpaces: false
+                });
+                document.getElementById(textAreaId).addEventListener('keyup', function () {
+                    storeCurrentJSBuffer();
+                });
+        
+                if (window.parent.document.location.protocol == "file:") {
+                    intellisensePaths = [];
                 } else {
-                    path += '&';
+                    intellisensePaths = intellisensePaths.map(function (path) {
+                        if (path.indexOf("?") < 0) {
+                            path += '?';
+                        } else {
+                            path += '&';
+                        }
+                        return path += 'refresh=' + Math.floor(Math.random() * 1000000000);
+                    });
                 }
-                return path += 'refresh=' + Math.floor(Math.random() * 1000000000);
-            });
-        }
-
-        require([
-            'vs/editor/editor.main',
-            'vs/platform/platform',
-            'vs/editor/modes/modesExtensions'
-        ], function (Platform, ModesExt) {
-            Platform.Registry.as(ModesExt.Extensions.EditorModes).configureMode(editorMode, {
-                "validate": {
-                    "extraLibs": intellisensePaths
-                }
-            });
+            
+                require(['vs/platform/platform', 'vs/editor/modes/modesExtensions'], function (Platform, ModesExt) {
+                    Platform.Registry.as(ModesExt.Extensions.EditorModes).configureMode(editorMode, {
+                        "validate": {
+                            "extraLibs": intellisensePaths
+                        }
+                    });  
+                });
+            
+          
         });
 
         $(window).resize(function () {
