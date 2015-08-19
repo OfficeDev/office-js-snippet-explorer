@@ -90,7 +90,6 @@ declare module Word {
         insertOoxml(ooxml: string, insertLocation: string): Word.Range;
         insertParagraph(paragraphText: string, insertLocation: string): Word.Paragraph;
         insertText(text: string, insertLocation: string): Word.Range;
-        search(searchText: string, searchOptions?: Word.SearchOptions): Word.SearchResultCollection;
         select(): void;
         _KeepReference(): void;
         /** Handle results returned from the document
@@ -227,7 +226,7 @@ declare module Word {
         /** Gets the loaded child items in this collection. */
         items: Array<Word.InlinePicture>;
         _ReferenceId: string;
-        getItem(index: number): Word.InlinePicture;
+        _GetItem(index: number): Word.InlinePicture;
         _KeepReference(): void;
         /** Handle results returned from the document
          * @private
@@ -288,7 +287,6 @@ declare module Word {
         insertOoxml(ooxml: string, insertLocation: string): Word.Range;
         insertParagraph(paragraphText: string, insertLocation: string): Word.Paragraph;
         insertText(text: string, insertLocation: string): Word.Range;
-        search(searchText: string, searchOptions?: Word.SearchOptions): Word.SearchResultCollection;
         select(): void;
         _KeepReference(): void;
         /** Handle results returned from the document
@@ -307,7 +305,7 @@ declare module Word {
         /** Gets the loaded child items in this collection. */
         items: Array<Word.Paragraph>;
         _ReferenceId: string;
-        getItem(index: number): Word.Paragraph;
+        _GetItem(index: number): Word.Paragraph;
         _KeepReference(): void;
         /** Handle results returned from the document
          * @private
@@ -347,7 +345,6 @@ declare module Word {
         insertOoxml(ooxml: string, insertLocation: string): Word.Range;
         insertParagraph(paragraphText: string, insertLocation: string): Word.Paragraph;
         insertText(text: string, insertLocation: string): Word.Range;
-        search(searchText: string, searchOptions?: Word.SearchOptions): Word.SearchResultCollection;
         select(): void;
         _KeepReference(): void;
         /** Handle results returned from the document
@@ -396,7 +393,7 @@ declare module Word {
         /** Gets the loaded child items in this collection. */
         items: Array<Word.Range>;
         _ReferenceId: string;
-        getItem(index: number): Word.Range;
+        _GetItem(index: number): Word.Range;
         _KeepReference(): void;
         /** Handle results returned from the document
          * @private
@@ -434,7 +431,7 @@ declare module Word {
         /** Gets the loaded child items in this collection. */
         items: Array<Word.Section>;
         _ReferenceId: string;
-        getItem(index: number): Word.Section;
+        _GetItem(index: number): Word.Section;
         _KeepReference(): void;
         /** Handle results returned from the document
          * @private

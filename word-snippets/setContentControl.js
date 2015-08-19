@@ -11,12 +11,10 @@ myContentControl.appearance = "tags";
 
 ctx.load(myContentControl);
 
-ctx.executeAsync().then(
-    function () {
+ctx.executeAsync()
+    .then(function () {
         console.log("Content control Id: " + myContentControl.id);
-    },
-    function (result) {
-        console.log("Failed: ErrorCode=" + result.errorCode + ", ErrorMessage=" + result.errorMessage);
-        console.log(result.traceMessages);
-    }
-);
+    })
+    .catch(function (error) {
+        console.log(JSON.stringify(error));
+    });

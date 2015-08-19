@@ -2,16 +2,18 @@ var ctx = new Word.RequestContext();
 
 var mySections = ctx.document.sections;
 ctx.load(mySections);
+ctx.references.add(mySections);
 
-var paras = mySections.getItem(0).body.paragraphs;
-ctx.load(paras);
+ctx.executeAsync()
+    .then(function () {
+        var paras = mySections.items[0].body.paragraphs;
+        ctx.load(paras);
 
-ctx.executeAsync().then(
-    function () {
-        console.log("Number of paragraphs in section: " + paras.items.length);
-    },
-    function (result) {
-        console.log("Failed: ErrorCode=" + result.errorCode + ", ErrorMessage=" + result.errorMessage);
-        console.log(result.traceMessages);
-    }
-);
+        ctx.executeAsync()
+            .then(function () {
+                console.log("Number of paragraphs in section: " + paras.items.length);
+            });
+    })
+    .catch(function (error) {
+        console.log(JSON.stringify(error));
+    });
