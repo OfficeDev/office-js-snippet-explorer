@@ -30,7 +30,12 @@ officeJsSnippetApp.config(['$routeProvider', function ($routeProvider) {
 		.when('/snippets/:app',
 			{
 				controller: 'SamplesController',
-				templateUrl: 'partials/samples.html'
+				templateUrl: 'partials/snippet-browser.html'
+			})
+		.when('/add-in/:app',
+			{
+				controller: 'SamplesController',
+				templateUrl: 'partials/add-in.html'
 			})
 		.when('/testAll',
 			{
@@ -62,8 +67,7 @@ officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams
 	CodeEditorIntegration.initializeJsEditor('TxtRichApiScript', [
 			"/editorIntelliSense/ExcelLatest.txt",
 			"/editorIntelliSense/WordLatest.txt",
-			"/editorIntelliSense/Office.Runtime.txt",
-			"/editorIntelliSense/Helpers.txt"
+			"/editorIntelliSense/Office.Runtime.txt"
 	]);
 	
 	CodeEditorIntegration.setDirty = function() {
@@ -160,7 +164,6 @@ officeJsSnippetApp.controller("TestAllController", function($scope, $q, snippetF
 function addTestResults(sampleCode) {
 	return sampleCode.replace("console.log(\"done\");", "sample.runStatus = \"Success\"; deferred.resolve();");
 }
-
 
 function addDeferredErrorHandling(sampleCode) {
 	return sampleCode.replace("ctx.executeAsync().then();", "ctx.executeAsync().then(function() {\r\n    console.log(\"done\");\r\n}, function(error) {\r\n    sample.runStatus = \"Error: \" + error.errorCode + \":\" + error.errorMessage; deferred.resolve(); });");
