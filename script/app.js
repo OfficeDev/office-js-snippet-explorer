@@ -61,7 +61,7 @@ officeJsSnippetApp.factory("snippetFactory", ['$http', function ($http) {
 
 officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams, snippetFactory) {
 	$scope.samples = [{ name: "Loading..." }];
-	$scope.selectedSample = { description: "No sample loaded" };
+	$scope.selectedSample = { description: "No snippet loaded" };
 	$scope.insideOffice = insideOffice;
 	
 	CodeEditorIntegration.initializeJsEditor('TxtRichApiScript', [

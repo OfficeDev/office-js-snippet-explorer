@@ -1,20 +1,19 @@
 <div id="samplesContainer" class="container" style="overflow: hidden; display:flex; flex-direction: column; position: absolute; top:0px; bottom: 0px; left: 0px; right: 0px; padding: 10px;">
 	<div>
-        <h2 class="title">Excel JavaScript API Snippet Explorer (Preview)</h2>
-        <p>Welcome! Learn how to implement the new Excel JavaScript APIs (Preview) with code snippets.<p>
-            <h4>Choose the API</h4>
+        <h2 class="title">Office 2016 JavaScript API Snippet Explorer (Preview)</h2>
+        <p>Welcome! Learn how to implement the Office 2016 JavaScript APIs with code snippets.<p>
             <select ng-model="selectedGroup" ng-options="group.name for group in groups">
                 <option value="">-- choose a group --</option>
             </select>
             <a href="#/testAll" style="text-decoration: none;">-</a>
             <select ng-change="loadSampleCode()" ng-model="selectedSample" ng-options="sample.name for sample in samples | filter:{group: selectedGroup.name}">
-                <option value="">-- choose a sample --</option>
+                <option value="">-- choose a snippet --</option>
             </select>
 </div>
 	<div>
 		<p><button id="runButton" ng-hide="!insideOffice" ng-click="runSelectedSample()">Run!</button> <span>{{selectedSample.description}}</span></p>
 	</div>
-    <h4>Sample code</h4>
+    
 	<div style="flex-grow: 1; overflow: hidden" id="TxtRichApiScript">
 	
 	</div>
