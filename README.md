@@ -5,7 +5,7 @@ This Office Add-in sample uses Angular. It lets you explore and modify code snip
 - [Word](http://officesnippetexplorer.azurewebsites.net/#/snippets/word)
 - [Excel](http://officesnippetexplorer.azurewebsites.net/#/snippets/excel)
 
-IntelliSense is enabled so that you can see which properties and methods are available on each object. We highly suggest that you run this sample in Excel and Word after you browse the available snippet. The next two sections will show you how you can make this add-in available in Excel and Word. 
+IntelliSense is enabled so that you can see which properties and methods are available on each object. We highly suggest that you run this sample in Excel and Word after you browse the available snippets. The next two sections will show you how you can make this add-in available in Excel and Word. 
 
 ## Run OfficeJS Snippet Explorer in Excel 2016
 
@@ -13,7 +13,7 @@ Do the following steps to run this sample in Excel 2016:
 
 1. Create a folder on a network share called `manifests`.
 2. Create a file called snippet-explorer-excelJS.xml and place the following content in it:
-
+  
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
@@ -93,7 +93,7 @@ You will need to sign a [Contributor License Agreement](https://cla.microsoft.co
 This sample is open for pull requests to add snippets to this repository. You can add to the snippets in either the excel-snippets or word-snippets directories. Here's what you do to add a snippet:
 
 1. Create a JS file in the excel-snippets or word-snippets directory with a descriptive name. Take a look at the existing file names for ideas on how you should name the file.
-2. Add you snippet to the file. 
+2. Add your snippet to the file.
 3. Open samples.json.
 4. Add an entry to the `values` array. Your entry will look like:
 
