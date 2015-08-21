@@ -4,7 +4,8 @@ var ctx = new Word.RequestContext();
 var paragraphs = ctx.document.body.paragraphs;
 
 // Queue: load the paragraphs.
-ctx.load(paragraphs, { select: "text" });
+ctx.load(paragraphs, { select: "text",
+                       expand: "paragraph"});
 
 // Queue: add a reference to the paragraphs collection
 ctx.references.add(paragraphs);
@@ -14,7 +15,7 @@ ctx.executeAsync()
     .then(function () {
 
         // Queue: get the first paragraph.
-        var paragraph = paragraphs._GetItem(0);
+        var paragraph = paragraphs.items[0];
 
         // Queue: insert the paragraph after the current paragraph.
         paragraph.insertParagraph('Content of a new paragraph', Word.InsertLocation.after);

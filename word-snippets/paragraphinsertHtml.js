@@ -3,8 +3,9 @@ var ctx = new Word.RequestContext();
 // Queue: get all of the paragraphs in the document.
 var paragraphs = ctx.document.body.paragraphs;
 
-// Queue: load the paragraphs and their text.
-ctx.load(paragraphs, { select: "text" });
+// Queue: load the paragraphs.
+ctx.load(paragraphs, { select: "text",
+                       expand: "paragraph"});
 
 // Queue: add a reference to the paragraphs collection
 ctx.references.add(paragraphs);
@@ -14,7 +15,7 @@ ctx.executeAsync()
     .then(function () {
 
         // Queue: get the first paragraph.
-        var paragraph = paragraphs._GetItem(0);
+        var paragraph = paragraphs.items[0];
 
         // Queue: Insert HTML content at the end of the first paragraph.
         paragraph.insertHtml("<strong>Inserted HTML.</strong>", Word.InsertLocation.end);
