@@ -57,6 +57,12 @@ var CodeEditorIntegration;
     }
     CodeEditorIntegration.getJavaScriptToRun = getJavaScriptToRun;
 
+    function getEditorTextAsJavaScript() {
+        var model = jsCodeEditor.getModel();
+        return model.getMode().getEmitOutput(model.getAssociatedResource(), 'js');
+    }
+    CodeEditorIntegration.getEditorTextAsJavaScript = getEditorTextAsJavaScript;
+
     function setJavaScriptText(text) {
         require(["vs/editor/contrib/snippet/snippet"], function (snippet) {
             jsCodeEditor.setSelection(jsCodeEditor.getModel().getFullModelRange());

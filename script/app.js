@@ -94,13 +94,23 @@ officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams
 	
 	$scope.runSelectedSample = function() {
 		var script = CodeEditorIntegration.getJavaScriptToRun().replace(/console.log/g, "logComment");
-		try {
-			eval(script);
-		} catch (e) {
-			logComment(e.name + ": " + e.message);
-		}
+		
+		if (isTrulyJavaScript(script)) {
+			try {
+				eval(script);
+			} catch (e) {
+				logComment(e.name + ": " + e.message);
+			}	
+		} else {
+			CodeEditorIntegration.getEditorTextAsJavaScript().then(function (output) {
+				if (output == null) {
+					logComment("Invalid JavaScript / TypeScript. Please fix the errors shown in the code editor and try again.");
+				} else {
+					eval(output.content);
+				}
+			});
+		}	
 	}
-
 });
 
 officeJsSnippetApp.controller("TestAllController", function($scope, $q, snippetFactory) {
@@ -176,4 +186,14 @@ function addErrorHandling(sampleCode) {
 function addErrorHandlingIfNeeded(sampleCode) {
 	if (!insideOffice) return sampleCode;
 	return addErrorHandling(sampleCode);	
+}
+
+/** returns whether the text is truly javascript (as opposed to typescript) */
+function isTrulyJavaScript(text) {
+	try {
+		new Function(text);
+		return true;
+	} catch (syntaxError) {
+		return false;
+	}
 }
