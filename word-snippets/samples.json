@@ -16,18 +16,66 @@
         { "done": true, "filename": "insertPictureFromBase64.js", "name": "Insert Picture from Base64", "group": "Picture", "description": "Insert picture into the first paragraph." },
         { "done": true, "filename": "setFont.js", "name": "Set Paragraph Font", "group": "Formatting", "description": "Set paragraph font properties." },
         { "done": true, "filename": "setParagraphProperties.js", "name": "Set Paragraph Properties", "group": "Paragraph", "description": "Set paragraph properties." },
-        { "done": true, "filename": "searchText.js", "name": "Search Text", "group": "Search", "description": "Search for some text." }
+        { "done": true, "filename": "searchText.js", "name": "Search Text", "group": "Search", "description": "Search for some text." },
+        
+        { "done": true, "filename": "paragraphClear.js", "name": "Clear paragraph contents", "group": "Paragraph", "description": "Clear the contents of the first paragraph." },
+        { "done": true, "filename": "paragraphDelete.js", "name": "Delete a paragraph", "group": "Paragraph", "description": "Delete the first paragraph." },
+        { "done": true, "filename": "paragraphgetHTML.js", "name": "Get the paragraph HTML", "group": "Paragraph", "description": "Get the HTML form of the first paragraph." },
+        { "done": true, "filename": "paragraphgetOoxml.js", "name": "Get the paragraph OOXML", "group": "Paragraph", "description": "Get the OOXML form of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertBreak.js", "name": "Insert a page break", "group": "Paragraph", "description": "Inserts a page break after the first paragraph." },
+        { "done": true, "filename": "paragraphinsertContentControl.js", "name": "Insert a content control", "group": "Paragraph", "description": "Wrap the first paragraph in a content control." },
+        { "done": true, "filename": "paragraphinsertFileFromBase64.js", "name": "Insert Base64 content", "group": "Paragraph", "description": "Insert the base64 encoded contents of a docx file." },
+        { "done": true, "filename": "paragraphinsertHtml.js", "name": "Insert HTML content", "group": "Paragraph", "description": "Inserts HTML content at the end of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertInlinePictureFromBase64.js", "name": "Insert an inline picture", "group": "Paragraph", "description": "Inserts a picture at the beginning of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertOoxml.js", "name": "Insert OOXML content", "group": "Paragraph", "description": "Inserts OOXML content at the end of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertParagraph.js", "name": "Insert a paragraph", "group": "Paragraph", "description": "Inserts a paragraph at the end of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertText.js", "name": "Insert text in to the paragraph", "group": "Paragraph", "description": "Inserts text at the end of the first paragraph." },
+        { "done": true, "filename": "paragraphload.js", "name": "Load font and style properties", "group": "Paragraph", "description": "Loads the font and style properties of the first paragraph." },
+        { "done": true, "filename": "paragraphselect.js", "name": "Select the last paragraph", "group": "Paragraph", "description": "Select the last paragraph in the document." },
+        
+        { "done": true, "filename": "bodyClear.js", "name": "Clear body contents", "group": "Body", "description": "Clear the contents of the body." },
+        { "done": true, "filename": "bodygetHTML.js", "name": "Get the body HTML", "group": "Body", "description": "Get the body HTML." },
+        { "done": true, "filename": "bodygetOoxml.js", "name": "Get the body OOXML", "group": "Body", "description": "Get the body OOXML." },
+        { "done": true, "filename": "bodygetText.js", "name": "Get the body text", "group": "Body", "description": "Get the body text." },
+        { "done": true, "filename": "bodyinsertBreak.js", "name": "Insert a page break", "group": "Body", "description": "Inserts a line break at te start of the body." },
+        { "done": true, "filename": "bodyinsertContentControl.js", "name": "Insert a content control", "group": "Body", "description": "Wraps the body in a content control." },
+        { "done": true, "filename": "bodyinsertFileFromBase64.js", "name": "Insert Base64 content", "group": "Body", "description": "Insert the base64 encoded contents of a docx file." },
+        { "done": true, "filename": "bodyinsertHtml.js", "name": "Insert HTML content", "group": "Body", "description": "Inserts HTML content at the beginning of the body." },
+        { "done": true, "filename": "bodyinsertOoxml.js", "name": "Insert OOXML content", "group": "Body", "description": "Inserts OOXML content at the beginning of the body." },
+        { "done": true, "filename": "bodyinsertParagraph.js", "name": "Insert a paragraph", "group": "Body", "description": "Inserts a paragraph at the end of the body." },
+        { "done": true, "filename": "bodyinsertText.js", "name": "Insert text in to the body", "group": "Body", "description": "Inserts text at the beginning of the body." },
+        { "done": true, "filename": "bodyload.js", "name": "Load font and style properties", "group": "Body", "description": "Loads the font and style properties of the body." },
+        { "done": true, "filename": "bodysearch.js", "name": "Search the body", "group": "Body", "description": "Search the body for the string 'Video'." },
+        { "done": true, "filename": "bodyselect.js", "name": "Select the last paragraph", "group": "Body", "description": "Selects the entire body." },
+        
+        { "done": true, "filename": "rangeClear.js", "name": "Clear the range", "group": "Range", "description": "Clear the range." },
+        { "done": true, "filename": "rangeDelete.js", "name": "Delete the range", "group": "Range", "description": "Delete the range." },
+        { "done": true, "filename": "rangegetHTML.js", "name": "Get HTML", "group": "Range", "description": "Get the HTML from a range." },
+        { "done": true, "filename": "rangegetOOXML.js", "name": "Get OOXML", "group": "Range", "description": "Get the OOXML of the range." },
+        { "done": true, "filename": "rangeinsertBreak.js", "name": "Insert a break", "group": "Range", "description": "Insert a page break after the range." },
+        { "done": true, "filename": "rangeinsertContentControl.js", "name": "Insert Content Control", "group": "Range", "description": "Insert a content control in the range." },
+        { "done": true, "filename": "rangeinsertFileFromBase64.js", "name": "Insert content from a Base 64 file", "group": "Range", "description": "Insert Base64 encoded text at the beginning of the range." },
+        { "done": true, "filename": "rangeinsertHtml.js", "name": "Insert HTML", "group": "Range", "description": "Insert HTML at the start of the range." },
+        { "done": true, "filename": "rangeinsertOoxml.js", "name": "Insert OOXML", "group": "Range", "description": "Insert OOXML at the start of the range." },
+        { "done": true, "filename": "rangeinsertParagraph.js", "name": "Insert a paragraph", "group": "Range", "description": "Insert paragraph at the end of the range." },
+        { "done": true, "filename": "rangeinsertText.js", "name": "Insert text", "group": "Range", "description": "Insert text at the end of the range." },
+        { "done": true, "filename": "rangeload.js", "name": "Load the range", "group": "Range", "description": "Load the range and then show its property values." },
+        { "done": true, "filename": "rangeselect.js", "name": "Select a range", "group": "Range", "description": "Insert HTML content, and then select the range of the inserted HTML content." }
+
+        
     ],
     "groups": [
-        { "name": "Range" },
+        
+        { "name": "Body" },
         { "name": "ContentControl" },
-        { "name": "Picture" },
-        { "name": "Paragraph" },
-        { "name": "Section" },
         { "name": "Document" },
         { "name": "Formatting" },
+        { "name": "Others" },
+        { "name": "Paragraph" },
+        { "name": "Picture" },
+        { "name": "Range" },
         { "name": "Search" },
-        { "name": "Others" }
+        { "name": "Section" }
     ],
     "suggestions": [
         { "missing": false, "done": false, "filename": "findAndReplace.js", "name": "Find Text and Replace", "description": "" }
