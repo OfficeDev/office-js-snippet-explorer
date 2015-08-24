@@ -17,7 +17,7 @@ ctx.executeAsync()
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
-}
+
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 
