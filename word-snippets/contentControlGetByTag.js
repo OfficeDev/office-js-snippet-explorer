@@ -1,20 +1,23 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var range = ctx.document.getSelection();
 
-var myContentControl = range.insertContentControl();
-myContentControl.tag = "Customer-Address";
-myContentControl.title = "Enter Customer Address Here:";
-myContentControl.style = "Heading 1";
-myContentControl.insertText("One Microsoft Way, Redmond, WA 98052", 'replace');
-myContentControl.cannotEdit = true;
-myContentControl.appearance = "tags";
+// Queue: get all of the content controls in the document with a specific tag.
+var contentControls = ctx.document.contentControls.getByTag('Customer-Address');
 
-ctx.load(myContentControl);
+// Queue: load the text property for all of content controls with a specific tag. 
+ctx.load(contentControls, { select: 'text' });
 
+
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        console.log("Content control Id: " + myContentControl.id);
+        if (contentControls.items.length === 0) {
+            console.log('No content control found.');
+        }
+        else {
+            console.log('First content control text: ' + contentControls.items[0].text);
+        }
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));

@@ -99,7 +99,11 @@ This sample is open for pull requests to add snippets to this repository. You ca
 
     `{ "done": true, "filename": "YOURFILENAME", "name": "DISPLAYNAME", "group": "GROUPNAMEFROMGROUPS", "description": "ASIMPLEDESCRIPTION"}`
 
-5. Replace the value for the filename, name, group, and description fields with information that describes your snippet.
+5. Replace the value for the filename, name, group, and description fields with information that describes your snippet. The filename should take the form of {object}{method}{description}.js. The object name is required -- this makes the list of snippets easy to peruse. For example:
+
+    paragraphClear.js
+    rangeInsertText.js
+
 6. Save all of your changes, test it, and open your pull request.
 
 ## Additional resources

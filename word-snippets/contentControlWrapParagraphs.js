@@ -1,22 +1,35 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var ccs = ctx.document.contentControls.getByTag("Customer-Address");
-ctx.load(ccs);
-ctx.references.add(ccs);
 
+// Queue: get all of the paragraphs in the document body.
+var paragraphs = ctx.document.body.paragraphs;
+
+// Queue: load all of the paragraphs.
+ctx.load(paragraphs, { select: 'text'});
+
+// Queue: add a reference to the paragraphs collection.
+ctx.references.add(paragraphs);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        ctx.references.remove(ccs);
-        ctx.executeAsync().then(
-            function () {
-                console.log("Content Control Text: " + ccs.items[0].text);
-            }
-         );
+        for (var i = 0; i < paragraphs.items.length; i++) {
+            
+            // Queue: wrap each paragraph in a content control.
+            paragraphs.items[i].insertContentControl();
+        }
+        
+        // Queue: remove references to the paragraph collection.
+        ctx.references.remove(paragraphs);
+    })
+    // Run the batch of commands in the queue.
+    .then(ctx.executeAsync)
+    .then(function () {
+                console.log("Success");
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

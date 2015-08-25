@@ -1,24 +1,16 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var paras = ctx.document.body.paragraphs;
-ctx.load(paras);
-ctx.references.add(paras);
 
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        for (var i = 0; i < paras.items.length; i++) {
-            paras.items[i].insertContentControl();
-        }
-
-        ctx.references.remove(paras);
-        ctx.executeAsync()
-            .then(function () {
-                console.log("Success");
-            });
+        console.log("Success");
     })
+
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
+
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

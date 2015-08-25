@@ -1,23 +1,21 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var cCtrls = ctx.document.body.contentControls;
-ctx.load(cCtrls, { select: "text" });
-ctx.references.add(cCtrls);
 
+// Queue: get all of the content controls in the document body.
+var contentControls = ctx.document.body.contentControls;
+
+// Queue: load the text property for all of content controls. 
+ctx.load(contentControls, { select: "text" });
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var results = new Array();
-        for (var i = 0; i < cCtrls.items.length; i++) {
-            results.push(cCtrls.items[i]);
-        }
 
-        ctx.references.remove(cCtrls);
-        ctx.executeAsync()
-            .then(function () {
-                for (var i = 0; i < results.length; i++) {
-                    console.log("contentControl[" + i + "].length = " + results[i].text.length);
-                }
-            });
+        // Show the length of the text property for each content control.
+        for (var i = 0; i < contentControls.items.length; i++) {
+            console.log("contentControl[" + i + "].length = " +
+                        contentControls.items[i].text.length);
+        }
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
