@@ -34,6 +34,15 @@
         { "done": true, "filename": "contentControlClear.js", "name": "Clear content control", "group": "ContentControl", "description": "Clears the contents of the content control." },
         
         
+        { "done": true, "filename": "contentControlGetHtml.js", "name": "Get content control HTML", "group": "ContentControl", "description": "Gets the HTML text of the first content control." },
+        { "done": true, "filename": "contentControlGetOoxml.js", "name": "Get content control OOXML", "group": "ContentControl", "description": "Gets the OOXML of the first content control." },        
+        { "done": true, "filename": "contentControlInsertBreak.js", "name": "Insert a page break", "group": "ContentControl", "description": "Inserts a page break after the first content control." },        
+        { "done": true, "filename": "contentControlInsertParagraph.js", "name": "Insert a paragraph", "group": "ContentControl", "description": "Insert a paragraph after the first content control." },        
+        { "done": true, "filename": "contentControlInsertText.js", "name": "Insert text", "group": "ContentControl", "description": "Replace text in the first content control." },                
+        { "done": true, "filename": "contentControlInsertHtml.js", "name": "Insert HTML", "group": "ContentControl", "description": "Insert HTML at the start of the first content control." },        
+        { "done": true, "filename": "contentControlInsertOoxml.js", "name": "Insert OOXML", "group": "ContentControl", "description": "Insert OOXML at the end of the first content control." },
+        { "done": true, "filename": "contentControlLoad.js", "name": "Load content control properties", "group": "ContentControl", "description": "Load most of the content control properties." },        
+        
         { "done": true, "filename": "contentControlGetByTag.js", "name": "Get content control by tag", "group": "ContentControl", "description": "Get the content control by tag and print its value." },
         { "done": true, "filename": "contentControlGetAllControls.js", "name": "Get content control collection", "group": "ContentControl", "description": "Get all content controls in the body and print out the length of each content control's text property." },
         { "done": true, "filename": "contentControlCreate.js", "name": "Create content control", "group": "ContentControl", "description": "Create a content control around a selection and change the content and properties." },
