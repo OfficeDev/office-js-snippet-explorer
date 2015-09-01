@@ -1,20 +1,40 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var range = ctx.document.getSelection();
 
-var ooxmlText =
-    "<w:p xmlns:w='http://schemas.microsoft.com/office/word/2003/wordml'><w:r><w:rPr><w:b/><w:b-cs/><w:color w:val='FF0000'/><w:sz w:val='28'/><w:sz-cs w:val='28'/></w:rPr><w:t>Hello world (this should be bold, red, size 14).</w:t></w:r></w:p>";
+// Queue: get all of the sections in the document.
+var mySections = ctx.document.sections;
 
-range.insertOoxml(ooxmlText, Word.InsertLocation.end);
+// Queue: load the sections.
+ctx.load(mySections, { select: 'text' });
 
+// Queue: add a reference to the sections collection.
+ctx.references.add(mySections);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-         console.log("Success");
-     })
+    
+        // Queue: get the primary header of the first section. Note that the header is a body object.
+        var myHeader = mySections.items[0].getHeader("primary");
+    
+        // Queue: insert text at the end of the header.
+        myHeader.insertText("This is a header.", Word.InsertLocation.end);
+    
+        // Queue: wrap the header in a content control.
+        myHeader.insertContentControl();
+
+        // Queue: remove the references to the sections.
+        ctx.references.remove(mySections);
+    
+    })
+    // Run the batch of commands in the queue.
+    .then(ctx.executeAsync)
+    .then(function () {
+        console.log("Added a header to the first section.");
+    })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

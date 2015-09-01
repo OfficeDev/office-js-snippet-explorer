@@ -1,23 +1,31 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var mySections = ctx.document.sections;
-ctx.load(mySections);
-ctx.references.add(mySections);
+// Queue: get the document.
+var thisDocument = ctx.document;
 
+// Queue: load the document save state.
+ctx.load(thisDocument, { select: 'saved'});
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var paras = mySections.items[0].body.paragraphs;
-        ctx.load(paras);
-
-        ctx.executeAsync()
-            .then(function () {
-                console.log("Number of paragraphs in section: " + paras.items.length);
+        if (thisDocument.saved === false) {
+            // Queue: save this document.
+            thisDocument.save();
+            
+            // Run the batch of commands in the queue.
+            return ctx.executeAsync().then(function () {
+                console.log('Saved the document');
             });
+        } else {
+            console.log('The document has not changed since the last save.');
+        }
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
+
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

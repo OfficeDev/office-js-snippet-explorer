@@ -4,7 +4,7 @@ var ctx = new Word.RequestContext();
 // Queue: get a handle on the document body.
 var body = ctx.document.body;
 
-// Queue: setup the search options.
+// Setup the search options.
 var options = Word.SearchOptions.newObject(ctx);
 options.matchCase = false
 
@@ -25,12 +25,12 @@ ctx.executeAsync()
         var results = "Found count: " + searchResults.items.length + 
                       "<br>We highlighted the results and selected the 4th item.";
 
-        // Queue: Change the font for each found item. Select the 4th item.
+        // Queue: change the font for each found item. Select the 4th item.
         for (var i = 0; i < searchResults.items.length; i++) {
           searchResults.items[i].font.color = "#FF0000"    // Change color to Red
           searchResults.items[i].font.highlightColor = "#FFFF00";
           searchResults.items[i].font.bold = true;
-          if (i == 3)
+          if (i === 3)
             searchResults.items[i].select();
         }
 

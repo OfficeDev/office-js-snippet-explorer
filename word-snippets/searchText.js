@@ -1,27 +1,41 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var results = ctx.document.body.search("Video");
 
-ctx.load(results, { expand: "font" });
-ctx.references.add(results);
+// Setup the search options.
+var options = Word.SearchOptions.newObject(ctx);
+options.matchCase = false
 
+// Queue: search the document.
+var searchResults = ctx.document.body.search('Video', options);
+
+// Queue: load the results and get the font property values.
+ctx.load(searchResults, { expand: 'font' });
+
+// Queue: add a reference to the search results collection.
+ctx.references.add(searchResults);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        console.log("Found count: " + results.items.length);
+        console.log('Found count: ' + searchResults.items.length);
 
-        for (var i = 0; i < results.items.length; i++) {
-            results.items[i].font.color = "#FF0000"; //Red
-            results.items[i].font.highlightColor = "#FFFF00"; //Yellow
-            results.items[i].font.bold = true;
-            if (i == 3)
-                results.items[i].select();
+        // Queue: change the font for each found item. Select the 4th item.
+        for (var i = 0; i < searchResults.items.length; i++) {
+            searchResults.items[i].font.color = '#FF0000'; //Red
+            searchResults.items[i].font.highlightColor = '#FFFF00'; //Yellow
+            searchResults.items[i].font.bold = true;
+            if (i === 3)
+                searchResults.items[i].select();
         }
 
-        ctx.references.remove(results);
-        ctx.executeAsync()
-            .then(function () {
-                console.log("Completed!");
-            });
+        // Queue: remove the reference to the search results.
+        ctx.references.remove(searchResults);
+    })
+
+    // Run the batch of commands in the queue.
+    .then(ctx.executeAsync)
+    .then(function () {
+        console.log('Highlighted the search results.');
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));

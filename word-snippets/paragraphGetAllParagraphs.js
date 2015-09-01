@@ -1,22 +1,19 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var range = ctx.document.getSelection();
 
-var htmlText =
-    "<h1><strong>Insert Html</strong></h1>" +
-    "<h2><em>Office Extensibility Platform</em></h2>" +
-    "<p>This is an example of how the InsertHtml method works.</p>" +
-    "<table>" +
-        "<tr><td>Check</td><td>out</td></tr>" +
-        "<tr><td>this</td><td>table</td></tr>" +
-    "</table>";
+// Queue: get all of the paragraphs in the document.
+var paragraphs = ctx.document.body.paragraphs;
 
-range.insertHtml(htmlText, Word.InsertLocation.end);
+// Queue: load the paragraphs and their text property.
+ctx.load(paragraphs, {select: "text"});
 
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-         console.log("Success");
-     })
+        for (var i = 0; i < paragraphs.items.length; i++) {
+            console.log("paragraphs[" + i + "].content  = " + paragraphs.items[i].text);
+        }
+    })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });

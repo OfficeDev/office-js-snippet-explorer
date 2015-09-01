@@ -1,19 +1,37 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var textSample =
-    "Hello, world! This is an example of the insert text method. This is a method which allows users to insert text at the end of the document. It also can insert text into a relative location.";
+// Queue: get all of the sections in the document.
+var mySections = ctx.document.sections;
 
-ctx.document.body.insertParagraph(textSample, Word.InsertLocation.end);
+// Queue: load the sections.
+ctx.load(mySections, { select: 'text' });
 
+// Queue: add a reference to the sections collection.
+ctx.references.add(mySections);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-         console.log("Success");
-     })
+    
+        // Queue: get the paragraph collection from the first section.
+        var paragraphs = mySections.items[0].body.paragraphs;
+    
+        // Queue: load the paragraphs.
+        ctx.load(paragraphs, { select: 'text' });
+
+        // Queue: remove the reference to the paragraphs.
+        ctx.references.remove(paragraphs);
+    
+        // Run the batch of commands in the queue.
+        return ctx.executeAsync()
+            .then(function () {
+                console.log("Number of paragraphs in section: " + paragraphs.items.length);
+            });
+    })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 
