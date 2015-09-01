@@ -1,33 +1,30 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-// Queue: get all of the content controls in the document.
-var contentControls = ctx.document.contentControls;
+// Queue: get all of the content controls in the document body.
+var contentControls = ctx.document.body.contentControls;
 
 // Queue: load the text property for all of content controls. 
-ctx.load(contentControls, {select:"text"});
+ctx.load(contentControls, { select: "text" });
 
-// Queue: add a reference to the content controls collection.
-//ctx.references.add(contentControls);
-         
 // Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        
-        // Queue: clear the contents of the first content control.
-        contentControls.items[0].clear();
     
-        // Queue: remove references to the content control collection.
-//        ctx.references.remove(contentControls);
-        
-        // Run the batch of commands in the queue.
-        return ctx.executeAsync().then(
-           function () {
-               console.log("Cleared the contents of the first content control.");
-           }
-        )
+        if (contentControls.items.length === 0) {
+            console.log('No content control found.');
+        }
+        else {
+            // Queue: Put OOXML at the end of the first content control. 
+            contentControls.items[0].insertOoxml("<w:p xmlns:w='http://schemas.microsoft.com/office/word/2003/wordml'><w:r><w:rPr><w:b/><w:b-cs/><w:color w:val='FF0000'/><w:sz w:val='28'/><w:sz-cs w:val='28'/></w:rPr><w:t>Hello world (this should be bold, red, size 14).</w:t></w:r></w:p>", "End");
+            
+            // Run the batch of commands in the queue.
+            ctx.executeAsync()
+                .then(function () {
+                    console.log('Inserted OOXML in the first content control.');    
+            });
+        }
     })
-
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });

@@ -14,16 +14,16 @@ ctx.load(contentControls, {select:"text"});
 ctx.executeAsync()
     .then(function () {
         
-        // Queue: clear the contents of the first content control.
-        contentControls.items[0].clear();
+        // Queue: Delete the first content control and do not keep its contents.
+        contentControls.items[0].delete(false);
     
         // Queue: remove references to the content control collection.
-//        ctx.references.remove(contentControls);
+      //  ctx.references.remove(contentControls);
         
         // Run the batch of commands in the queue.
         return ctx.executeAsync().then(
            function () {
-               console.log("Cleared the contents of the first content control.");
+               console.log("Deleted the first content control.");
            }
         )
     })
