@@ -37,21 +37,21 @@ ctx.executeAsync()
             ctx.executeAsync()
                 .then(function () {
                     console.log('Property values of the first content control:' + 
-                                '   ----- appearance: ' + contentControls.items[0].appearance + 
-                                '   ----- cannotDelete: ' + contentControls.items[0].cannotDelete +
-                                '   ----- cannotEdit: ' + contentControls.items[0].cannotEdit +
-                                '   ----- color: ' + contentControls.items[0].color +
-                                '   ----- id: ' + contentControls.items[0].id +
-                                '   ----- placeHolderText: ' + contentControls.items[0].placeHolderText +
-                                '   ----- removeWhenEdited: ' + contentControls.items[0].removeWhenEdited +
-                                '   ----- title: ' + contentControls.items[0].title +
-                                '   ----- text: ' + contentControls.items[0].text +
-                                '   ----- type: ' + contentControls.items[0].type +
-                                '   ----- style: ' + contentControls.items[0].style +
-                                '   ----- tag: ' + contentControls.items[0].tag +
-                                '   ----- font size: ' + contentControls.items[0].font.size +
-                                '   ----- font name: ' + contentControls.items[0].font.name +
-                                '   ----- font color: ' + contentControls.items[0].font.color);
+                        '   ----- appearance: ' + contentControls.items[0].appearance + 
+                        '   ----- cannotDelete: ' + contentControls.items[0].cannotDelete +
+                        '   ----- cannotEdit: ' + contentControls.items[0].cannotEdit +
+                        '   ----- color: ' + contentControls.items[0].color +
+                        '   ----- id: ' + contentControls.items[0].id +
+                        '   ----- placeHolderText: ' + contentControls.items[0].placeholderText +
+                        '   ----- removeWhenEdited: ' + contentControls.items[0].removeWhenEdited +
+                        '   ----- title: ' + contentControls.items[0].title +
+                        '   ----- text: ' + contentControls.items[0].text +
+                        '   ----- type: ' + contentControls.items[0].type +
+                        '   ----- style: ' + contentControls.items[0].style +
+                        '   ----- tag: ' + contentControls.items[0].tag +
+                        '   ----- font size: ' + contentControls.items[0].font.size +
+                        '   ----- font name: ' + contentControls.items[0].font.name +
+                        '   ----- font color: ' + contentControls.items[0].font.color);
                                 
             });
         }
