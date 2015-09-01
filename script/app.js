@@ -86,12 +86,17 @@ officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams
 	$scope.loadSampleCode = function() {
 		appInsights.trackEvent("SampleLoaded", {name:$scope.selectedSample.name});
 		snippetFactory.getSampleCode($routeParams["app"], $scope.selectedSample.filename).then(function (response) {
-            $scope.selectedSample.code = addErrorHandlingIfNeeded(response.data);
+            var rawCodeSnippet = addErrorHandlingIfNeeded(response.data);
+            $scope.selectedSample.code = removeLicenseText(rawCodeSnippet);
 			$scope.insideOffice = insideOffice;
 			CodeEditorIntegration.setJavaScriptText($scope.selectedSample.code);
 			CodeEditorIntegration.resizeEditor();
 		});
 	};
+    
+    function removeLicenseText(rawCodeSnippet) {
+        return rawCodeSnippet.replace(/(\/\*([\s\S]*?)\*\/)|(\/\/(.*)$)/g, '');  
+    }
 	
 	$scope.runSelectedSample = function() {
 		var script = CodeEditorIntegration.getJavaScriptToRun().replace(/console.log/g, "logComment");
