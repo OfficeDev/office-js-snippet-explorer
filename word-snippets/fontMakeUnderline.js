@@ -1,15 +1,16 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var myPar = ctx.document.body.insertParagraph("Bibliography", "end");
-myPar.style = "Heading 1";
+// Queue: get the range object that represents the current selection.
+var selection = ctx.document.getSelection();
 
-var myPar2 = ctx.document.body.insertParagraph("This is my first book.", "end");
-myPar2.style = "Normal"
+// Queue: underline the current selection.
+selection.font.underline = Word.UnderlineType.thick;
 
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        console.log("Success");
+        console.log('The selection now has an underline style.')
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));

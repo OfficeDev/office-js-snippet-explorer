@@ -3,19 +3,13 @@
         { "done": true, "filename": "", "name": "", "group": "", "description": "" },
 
 
-        { "done": true, "filename": "insertParagraphs.js", "name": "Insert Paragraphs", "group": "Paragraph", "description": "Insert new paragraphs." },
+
 
         { "done": true, "filename": "insertPictureFromBase64.js", "name": "Insert Picture from Base64", "group": "Picture", "description": "Insert picture into the first paragraph." },
-        { "done": true, "filename": "setFont.js", "name": "Set Paragraph Font", "group": "Formatting", "description": "Set paragraph font properties." },
-        { "done": true, "filename": "setParagraphProperties.js", "name": "Set Paragraph Properties", "group": "Paragraph", "description": "Set paragraph properties." },
 
-        
-        { "done": true, "filename": "documentSave.js", "name": "Save the document", "group": "Document", "description": "Saves the document." },
-        { "done": true, "filename": "documentInsertHTMLIntoSelection.js", "name": "Insert HTML into document", "group": "Document", "description": "Inserts HTML into the current selection." },
-        { "done": true, "filename": "documentInsertOOXMLIntoSelection.js", "name": "Insert OOXML into document", "group": "Document", "description": "Insert OOXML into the current selection." },
-        { "done": true, "filename": "documentInsertTextIntoSelection.js", "name": "Insert text into document", "group": "Document", "description": "Insert text into the current selection." },
-        { "done": true, "filename": "documentLoadContentControls.js", "name": "Get all content controls in document", "group": "Document", "description": "Gets the collection of content controls in the document." },
-        
+
+
+
         
         { "done": true, "filename": "bodyClear.js", "name": "Clear body contents", "group": "Body", "description": "Clear the contents of the body." },
         { "done": true, "filename": "bodygetHTML.js", "name": "Get the body HTML", "group": "Body", "description": "Get the body HTML." },
@@ -46,6 +40,17 @@
         { "done": true, "filename": "contentControlLoad.js", "name": "Load content control properties", "group": "ContentControl", "description": "Load most of the content control properties." },        
         { "done": true, "filename": "contentControlSelect.js", "name": "Select a content control", "group": "ContentControl", "description": "Select the first content control in the body." },    
         { "done": true, "filename": "contentControlWrapParagraphs.js", "name": "Wrap paragraphs with content controls", "group": "ContentControl", "description": "Turn all paragraphs into content controls." },
+
+        { "done": true, "filename": "documentSave.js", "name": "Save the document", "group": "Document", "description": "Saves the document." },
+        { "done": true, "filename": "documentInsertHTMLIntoSelection.js", "name": "Insert HTML into document", "group": "Document", "description": "Inserts HTML into the current selection." },
+        { "done": true, "filename": "documentInsertOOXMLIntoSelection.js", "name": "Insert OOXML into document", "group": "Document", "description": "Insert OOXML into the current selection." },
+        { "done": true, "filename": "documentInsertTextIntoSelection.js", "name": "Insert text into document", "group": "Document", "description": "Insert text into the current selection." },
+        { "done": true, "filename": "documentLoadContentControls.js", "name": "Get all content controls in document", "group": "Document", "description": "Gets the collection of content controls in the document." },        
+
+        { "done": true, "filename": "fontMakeBold.js", "name": "Bold the current selection", "group": "Formatting", "description": "Apply bold formatting to the current selection." },
+        { "done": true, "filename": "fontChangeSize.js", "name": "Change the font size", "group": "Formatting", "description": "Change the font size of the current selection." },
+        { "done": true, "filename": "fontMakeUnderline.js", "name": "Underline the selection", "group": "Formatting", "description": "Underline the current selection." },
+        { "done": true, "filename": "fontSetParagraphFont.js", "name": "Set a paragraph's font", "group": "Formatting", "description": "Set a paragraph's font properties." },
         
         { "done": true, "filename": "paragraphClear.js", "name": "Clear paragraph contents", "group": "Paragraph", "description": "Clear the contents of the first paragraph." },
         { "done": true, "filename": "paragraphDelete.js", "name": "Delete a paragraph", "group": "Paragraph", "description": "Delete the first paragraph." },
@@ -57,10 +62,12 @@
         { "done": true, "filename": "paragraphinsertHtml.js", "name": "Insert HTML content", "group": "Paragraph", "description": "Inserts HTML content at the end of the first paragraph." },
         { "done": true, "filename": "paragraphinsertInlinePictureFromBase64.js", "name": "Insert an inline picture", "group": "Paragraph", "description": "Inserts a picture at the beginning of the first paragraph." },
         { "done": true, "filename": "paragraphinsertOoxml.js", "name": "Insert OOXML content", "group": "Paragraph", "description": "Inserts OOXML content at the end of the first paragraph." },
-        { "done": true, "filename": "paragraphinsertParagraph.js", "name": "Insert a paragraph", "group": "Paragraph", "description": "Inserts a paragraph at the end of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertParagraph.js", "name": "Insert a paragraph (collection)", "group": "Paragraph", "description": "Inserts a paragraph at the end of the first paragraph." },
+        { "done": true, "filename": "paragraphinsertParagraphEndBody.js", "name": "Insert paragraph (body)", "group": "Paragraph", "description": "Inserts a new paragraph at the end of the body." },
         { "done": true, "filename": "paragraphinsertText.js", "name": "Insert text in to the paragraph", "group": "Paragraph", "description": "Inserts text at the end of the first paragraph." },
         { "done": true, "filename": "paragraphload.js", "name": "Load font and style properties", "group": "Paragraph", "description": "Loads the font and style properties of the first paragraph." },
         { "done": true, "filename": "paragraphselect.js", "name": "Select the last paragraph", "group": "Paragraph", "description": "Select the last paragraph in the document." },
+        { "done": true, "filename": "paragraphFormatLineSpacing.js", "name": "Set line spacing", "group": "Paragraph", "description": "Set the paragraph line spacing." },        
         
         { "done": true, "filename": "rangeClear.js", "name": "Clear the range", "group": "Range", "description": "Clear the range." },
         { "done": true, "filename": "rangeDelete.js", "name": "Delete the range", "group": "Range", "description": "Delete the range." },

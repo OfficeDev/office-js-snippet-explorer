@@ -1,22 +1,29 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var paras = ctx.document.body.paragraphs;
-ctx.load(paras);
-ctx.references.add(paras);
 
+// Queue: get all of the paragraphs in the document.
+var paragraphs = ctx.document.body.paragraphs;
+
+// Queue: load the paragraphs.
+ctx.load(paragraphs);
+
+// Queue: add a reference to the paragraphs collection.
+ctx.references.add(paragraphs);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var par = paras.items[0];
-        par.lineSpacing = 36;
+    
+        // Queue: get the first paragraph and change line spacing. 
+        var paragraph = paragraphs.items[0];
+        paragraph.lineSpacing = 36;
 
-        ctx.load(par);
-        var val = par.lineSpacing;
-
-        ctx.references.remove(paras);
-        ctx.executeAsync()
-            .then(function () {
-                console.log("Success! Setting paragraph line spacing to " + val);
-            });
+        // Queue: remove the reference to the paragraphs.
+        ctx.references.remove(paragraphs);
+    })
+    .then(ctx.executeAsync)
+    .then(function () {
+        console.log('The paragraph line spacing was set.');
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
