@@ -1,10 +1,18 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-ctx.document.body.clear();
 
+// Queue: insert a paragraph and change its style.
+var myPar = ctx.document.body.insertParagraph('Bibliography', 'end');
+myPar.style = 'Heading 1';
+
+// Queue: insert a paragraph and change its style.
+var myPar2 = ctx.document.body.insertParagraph('This is my first book.', 'end');
+myPar2.style = 'Normal'
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        console.log("Success");
+        console.log('Added a bibliography section to the end of the body.');
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));

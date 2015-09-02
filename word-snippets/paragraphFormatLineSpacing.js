@@ -1,16 +1,30 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var range = ctx.document.getSelection();
 
-var ooxmlText =
-    "<w:p xmlns:w='http://schemas.microsoft.com/office/word/2003/wordml'><w:r><w:rPr><w:b/><w:b-cs/><w:color w:val='FF0000'/><w:sz w:val='28'/><w:sz-cs w:val='28'/></w:rPr><w:t>Hello world (this should be bold, red, size 14).</w:t></w:r></w:p>";
+// Queue: get all of the paragraphs in the document.
+var paragraphs = ctx.document.body.paragraphs;
 
-range.insertOoxml(ooxmlText, Word.InsertLocation.end);
+// Queue: load the paragraphs.
+ctx.load(paragraphs);
 
+// Queue: add a reference to the paragraphs collection.
+ctx.references.add(paragraphs);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-         console.log("Success");
-     })
+    
+        // Queue: get the first paragraph and change line spacing. 
+        var paragraph = paragraphs.items[0];
+        paragraph.lineSpacing = 36;
+
+        // Queue: remove the reference to the paragraphs.
+        ctx.references.remove(paragraphs);
+    })
+    .then(ctx.executeAsync)
+    .then(function () {
+        console.log('The paragraph line spacing was set.');
+    })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });

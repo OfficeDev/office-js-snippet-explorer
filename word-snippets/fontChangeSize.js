@@ -1,16 +1,17 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var range = ctx.document.getSelection();
 
-var textSample =
-    "Hello, world! This is an example of the insert text method. This is a method which allows users to insert text into a given selection. It can insert text into a relative location or it can overwrite the current selection.";
+// Queue: get the range object that represents the current selection.
+var selection = ctx.document.getSelection();
 
-range.insertText(textSample, Word.InsertLocation.end);
+// Queue: change the current selection font size.
+selection.font.size = 20;
 
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-         console.log("Success");
-     })
+        console.log('The font size has changed.')
+    })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });

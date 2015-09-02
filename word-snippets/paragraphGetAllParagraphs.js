@@ -1,15 +1,18 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var myPar = ctx.document.body.insertParagraph("Bibliography", "end");
-myPar.style = "Heading 1";
+// Queue: get all of the paragraphs in the document.
+var paragraphs = ctx.document.body.paragraphs;
 
-var myPar2 = ctx.document.body.insertParagraph("This is my first book.", "end");
-myPar2.style = "Normal"
+// Queue: load the paragraphs and their text property.
+ctx.load(paragraphs, {select: "text"});
 
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        console.log("Success");
+        for (var i = 0; i < paragraphs.items.length; i++) {
+            console.log("paragraphs[" + i + "].content  = " + paragraphs.items[i].text);
+        }
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));

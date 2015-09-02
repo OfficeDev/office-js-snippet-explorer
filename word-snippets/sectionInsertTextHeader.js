@@ -1,19 +1,40 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var textSample =
-    "Hello, world! This is an example of the insert text method. This is a method which allows users to insert text at the end of the document. It also can insert text into a relative location.";
+// Queue: get all of the sections in the document.
+var mySections = ctx.document.sections;
 
-ctx.document.body.insertParagraph(textSample, Word.InsertLocation.end);
+// Queue: load the sections.
+ctx.load(mySections, { select: 'text' });
 
+// Queue: add a reference to the sections collection.
+ctx.references.add(mySections);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-         console.log("Success");
-     })
+    
+        // Queue: get the primary header of the first section. Note that the header is a body object.
+        var myHeader = mySections.items[0].getHeader("primary");
+    
+        // Queue: insert text at the end of the header.
+        myHeader.insertText("This is a header.", Word.InsertLocation.end);
+    
+        // Queue: wrap the header in a content control.
+        myHeader.insertContentControl();
+
+        // Queue: remove the references to the sections.
+        ctx.references.remove(mySections);
+    
+    })
+    // Run the batch of commands in the queue.
+    .then(ctx.executeAsync)
+    .then(function () {
+        console.log("Added a header to the first section.");
+    })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

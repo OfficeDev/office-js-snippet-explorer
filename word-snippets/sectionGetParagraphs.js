@@ -1,27 +1,37 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var paras = ctx.document.body.paragraphs;
-ctx.load(paras);
-ctx.references.add(paras);
 
+// Queue: get all of the sections in the document.
+var mySections = ctx.document.sections;
+
+// Queue: load the sections.
+ctx.load(mySections, { select: 'text' });
+
+// Queue: add a reference to the sections collection.
+ctx.references.add(mySections);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var par = paras.items[0];
-        par.lineSpacing = 36;
+    
+        // Queue: get the paragraph collection from the first section.
+        var paragraphs = mySections.items[0].body.paragraphs;
+    
+        // Queue: load the paragraphs.
+        ctx.load(paragraphs, { select: 'text' });
 
-        ctx.load(par);
-        var val = par.lineSpacing;
-
-        ctx.references.remove(paras);
-        ctx.executeAsync()
+        // Queue: remove the reference to the paragraphs.
+        ctx.references.remove(paragraphs);
+    
+        // Run the batch of commands in the queue.
+        return ctx.executeAsync()
             .then(function () {
-                console.log("Success! Setting paragraph line spacing to " + val);
+                console.log("Number of paragraphs in section: " + paragraphs.items.length);
             });
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

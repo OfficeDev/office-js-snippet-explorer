@@ -1,22 +1,20 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var mySections = ctx.document.sections;
-ctx.load(mySections);
-ctx.references.add(mySections);
+// Queue: get the current selection.
+var range = ctx.document.getSelection();
 
+var ooxmlText =
+    "<w:p xmlns:w='http://schemas.microsoft.com/office/word/2003/wordml'><w:r><w:rPr><w:b/><w:b-cs/><w:color w:val='FF0000'/><w:sz w:val='28'/><w:sz-cs w:val='28'/></w:rPr><w:t>Hello world (this should be bold, red, size 14).</w:t></w:r></w:p>";
+
+// Queue: insert OOXML at the end of the selection.
+range.insertOoxml(ooxmlText, Word.InsertLocation.end);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var myHeader = mySections.items[0].getHeader("primary");
-        myHeader.insertText("This is a header.", Word.InsertLocation.end);
-        myHeader.insertContentControl();
-
-        ctx.executeAsync()
-        .then(function () {
-            ctx.references.remove(mySections);
-            console.log("Success");
-        });
-    })
+         console.log("Inserted the OOXML at the end of the selection.");
+     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });

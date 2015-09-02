@@ -1,23 +1,21 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-var mySections = ctx.document.sections;
-ctx.load(mySections);
-ctx.references.add(mySections);
+// Queue: get the range object that represents the current selection.
+var selection = ctx.document.getSelection();
 
+// Queue: underline the current selection.
+selection.font.underline = Word.UnderlineType.thick;
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var paras = mySections.items[0].body.paragraphs;
-        ctx.load(paras);
-
-        ctx.executeAsync()
-            .then(function () {
-                console.log("Number of paragraphs in section: " + paras.items.length);
-            });
+        console.log('The selection now has an underline style.')
     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
+
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

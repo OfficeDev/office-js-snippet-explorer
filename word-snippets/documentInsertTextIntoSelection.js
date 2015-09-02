@@ -1,24 +1,20 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
-var paras = ctx.document.body.paragraphs;
-ctx.load(paras, { expand: "font" });
-ctx.references.add(paras);
 
+// Queue: get the current selection.
+var range = ctx.document.getSelection();
+
+var textSample =
+    'This is an example of the insert text method. This is a method which allows users to insert text into a selection. It can insert text into a relative location or it can overwrite the current selection. Since the getSelection method returns a range object, look up the range object documentation for everything you can do with a selection.';
+
+// Queue: insert text at the end of the selection.
+range.insertText(textSample, Word.InsertLocation.end);
+
+// Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        var font = paras.items[0].font;
-        font.size = 32;
-        font.bold = true;
-        font.color = "#0000ff";
-        font.highlightColor = "#ffff00";
-
-        ctx.references.remove(paras);
-        ctx.executeAsync()
-            .then(function () {
-                console.log("Success");
-            }
-        );
-    })
+         console.log('Inserted the HTML at the end of the selection.');
+     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });
