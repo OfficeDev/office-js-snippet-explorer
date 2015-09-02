@@ -1,15 +1,6 @@
 {
     "values": [
         { "done": true, "filename": "", "name": "", "group": "", "description": "" },
-
-
-
-
-        { "done": true, "filename": "insertPictureFromBase64.js", "name": "Insert Picture from Base64", "group": "Picture", "description": "Insert picture into the first paragraph." },
-
-
-
-
         
         { "done": true, "filename": "bodyClear.js", "name": "Clear body contents", "group": "Body", "description": "Clear the contents of the body." },
         { "done": true, "filename": "bodygetHTML.js", "name": "Get the body HTML", "group": "Body", "description": "Get the body HTML." },
