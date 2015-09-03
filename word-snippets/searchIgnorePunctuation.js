@@ -3,10 +3,10 @@ var ctx = new Word.RequestContext();
 
 // Setup the search options.
 var options = Word.SearchOptions.newObject(ctx);
-options.matchCase = false
+options.ignorePunct = true;
 
 // Queue: search the document.
-var searchResults = ctx.document.body.search('Video', options);
+var searchResults = ctx.document.body.search('For example you', options);
 
 // Queue: load the results and get the font property values.
 ctx.load(searchResults, { expand: 'font' });
@@ -21,7 +21,7 @@ ctx.executeAsync()
 
         // Queue: change the font for each found item.
         for (var i = 0; i < searchResults.items.length; i++) {
-            searchResults.items[i].font.color = '#FF0000'; //Red
+            searchResults.items[i].font.color = 'purple';
             searchResults.items[i].font.highlightColor = '#FFFF00'; //Yellow
             searchResults.items[i].font.bold = true;
         }

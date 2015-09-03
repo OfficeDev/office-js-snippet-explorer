@@ -1,40 +1,17 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var ctx = new Word.RequestContext();
 
-// Setup the search options.
-var options = Word.SearchOptions.newObject(ctx);
-options.matchCase = false
+// Queue: get the current selection.
+var range = ctx.document.getSelection();
 
-// Queue: search the document.
-var searchResults = ctx.document.body.search('Video', options);
-
-// Queue: load the results and get the font property values.
-ctx.load(searchResults, { expand: 'font' });
-
-// Queue: add a reference to the search results collection.
-ctx.references.add(searchResults);
+// Queue: insert text at the end of the selection.
+range.insertContentControl();
 
 // Run the batch of commands in the queue.
 ctx.executeAsync()
     .then(function () {
-        console.log('Found count: ' + searchResults.items.length);
-
-        // Queue: change the font for each found item.
-        for (var i = 0; i < searchResults.items.length; i++) {
-            searchResults.items[i].font.color = '#FF0000'; //Red
-            searchResults.items[i].font.highlightColor = '#FFFF00'; //Yellow
-            searchResults.items[i].font.bold = true;
-        }
-
-        // Queue: remove the reference to the search results.
-        ctx.references.remove(searchResults);
-    })
-
-    // Run the batch of commands in the queue.
-    .then(ctx.executeAsync)
-    .then(function () {
-        console.log('Highlighted the search results.');
-    })
+         console.log('Wrapped the selection with a content control.');
+     })
     .catch(function (error) {
         console.log(JSON.stringify(error));
     });

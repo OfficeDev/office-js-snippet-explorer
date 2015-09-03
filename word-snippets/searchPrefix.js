@@ -3,10 +3,10 @@ var ctx = new Word.RequestContext();
 
 // Setup the search options.
 var options = Word.SearchOptions.newObject(ctx);
-options.matchCase = false
+options.matchPrefix = true;
 
 // Queue: search the document.
-var searchResults = ctx.document.body.search('Video', options);
+var searchResults = ctx.document.body.search('pro', options);
 
 // Queue: load the results and get the font property values.
 ctx.load(searchResults, { expand: 'font' });
@@ -19,9 +19,9 @@ ctx.executeAsync()
     .then(function () {
         console.log('Found count: ' + searchResults.items.length);
 
-        // Queue: change the font for each found item.
+        // Queue: change the font for each found item. 
         for (var i = 0; i < searchResults.items.length; i++) {
-            searchResults.items[i].font.color = '#FF0000'; //Red
+            searchResults.items[i].font.color = 'green';
             searchResults.items[i].font.highlightColor = '#FFFF00'; //Yellow
             searchResults.items[i].font.bold = true;
         }

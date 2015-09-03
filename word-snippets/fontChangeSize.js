@@ -4,7 +4,7 @@ var ctx = new Word.RequestContext();
 // Queue: get the range object that represents the current selection.
 var selection = ctx.document.getSelection();
 
-// Queue: change the current selection font size.
+// Queue: change the current selection's font size.
 selection.font.size = 20;
 
 // Run the batch of commands in the queue.

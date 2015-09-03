@@ -6,7 +6,7 @@
         { "done": true, "filename": "bodygetHTML.js", "name": "Get the body HTML", "group": "Body", "description": "Get the body HTML." },
         { "done": true, "filename": "bodygetOoxml.js", "name": "Get the body OOXML", "group": "Body", "description": "Get the body OOXML." },
         { "done": true, "filename": "bodygetText.js", "name": "Get the body text", "group": "Body", "description": "Get the body text." },
-        { "done": true, "filename": "bodyinsertBreak.js", "name": "Insert a page break", "group": "Body", "description": "Inserts a line break at te start of the body." },
+        { "done": true, "filename": "bodyinsertBreak.js", "name": "Insert a page break", "group": "Body", "description": "Inserts a line break at the start of the body." },
         { "done": true, "filename": "bodyinsertContentControl.js", "name": "Insert a content control", "group": "Body", "description": "Wraps the body in a content control." },
         { "done": true, "filename": "bodyinsertHtml.js", "name": "Insert HTML content", "group": "Body", "description": "Inserts HTML content at the beginning of the body." },
         { "done": true, "filename": "bodyinsertOoxml.js", "name": "Insert OOXML content", "group": "Body", "description": "Inserts OOXML content at the beginning of the body." },
@@ -33,15 +33,21 @@
         { "done": true, "filename": "contentControlWrapParagraphs.js", "name": "Wrap paragraphs with content controls", "group": "ContentControl", "description": "Turn all paragraphs into content controls." },
 
         { "done": true, "filename": "documentSave.js", "name": "Save the document", "group": "Document", "description": "Saves the document." },
-        { "done": true, "filename": "documentInsertHTMLIntoSelection.js", "name": "Insert HTML into document", "group": "Document", "description": "Inserts HTML into the current selection." },
-        { "done": true, "filename": "documentInsertOOXMLIntoSelection.js", "name": "Insert OOXML into document", "group": "Document", "description": "Insert OOXML into the current selection." },
-        { "done": true, "filename": "documentInsertTextIntoSelection.js", "name": "Insert text into document", "group": "Document", "description": "Insert text into the current selection." },
+        { "done": true, "filename": "documentInsertHTMLIntoSelection.js", "name": "Insert HTML into the document", "group": "Document", "description": "Inserts HTML into the current selection." },
+        { "done": true, "filename": "documentInsertOOXMLIntoSelection.js", "name": "Insert OOXML into the document", "group": "Document", "description": "Inserts OOXML into the current selection." },
+        { "done": true, "filename": "documentInsertTextIntoSelection.js", "name": "Insert text into the document", "group": "Document", "description": "Inserts text into the current selection." },
+        { "done": true, "filename": "documentWrapSelectionContentControl.js", "name": "Wrap the selection", "group": "Document", "description": "Wrap a content control around the current selection." },
         { "done": true, "filename": "documentLoadContentControls.js", "name": "Get all content controls in document", "group": "Document", "description": "Gets the collection of content controls in the document." },        
 
         { "done": true, "filename": "fontMakeBold.js", "name": "Bold the current selection", "group": "Formatting", "description": "Apply bold formatting to the current selection." },
         { "done": true, "filename": "fontChangeSize.js", "name": "Change the font size", "group": "Formatting", "description": "Change the font size of the current selection." },
         { "done": true, "filename": "fontMakeUnderline.js", "name": "Underline the selection", "group": "Formatting", "description": "Underline the current selection." },
         { "done": true, "filename": "fontSetParagraphFont.js", "name": "Set a paragraph's font", "group": "Formatting", "description": "Set a paragraph's font properties." },
+        { "done": true, "filename": "fontChange.js", "name": "Change the font", "group": "Formatting", "description": "Change the font of the current selection." },
+        { "done": true, "filename": "fontChangeColor.js", "name": "Change the font color", "group": "Formatting", "description": "Change the font color of the current selection." },
+        { "done": true, "filename": "fontHighlight.js", "name": "Highlight the selection", "group": "Formatting", "description": "Highlight the current selection." },
+        { "done": true, "filename": "fontStrikethrough.js", "name": "Strikethrough the font", "group": "Formatting", "description": "Strikethrough the font of the current selection." },
+
         
         { "done": true, "filename": "paragraphClear.js", "name": "Clear paragraph contents", "group": "Paragraph", "description": "Clear the contents of the first paragraph." },
         { "done": true, "filename": "paragraphDelete.js", "name": "Delete a paragraph", "group": "Paragraph", "description": "Delete the first paragraph." },
@@ -73,8 +79,13 @@
         { "done": true, "filename": "rangeload.js", "name": "Load the range", "group": "Range", "description": "Load the range and then show its property values." },
         { "done": true, "filename": "rangeselect.js", "name": "Select a range", "group": "Range", "description": "Insert HTML content, and then select the range of the inserted HTML content." },
 
-        { "done": true, "filename": "searchText.js", "name": "Search the document text", "group": "Search", "description": "Search for text and highlight the results." },
-        
+        { "done": true, "filename": "searchText.js", "name": "Search the document (matchCase)", "group": "Search", "description": "Perform a case insensitive search for the word 'video' and highlight the results." },
+        { "done": true, "filename": "searchWholeWord.js", "name": "Search the document text (matchWholeWord)", "group": "Search", "description": "Perform a whole word search for the word 'Click' and highlight the results." },
+        { "done": true, "filename": "searchPrefix.js", "name": "Search the document text (matchPrefix)", "group": "Search", "description": "Perform a search for the prefix 'pro' and highlight the results." },
+        { "done": true, "filename": "searchSuffix.js", "name": "Search the document text (matchSuffix)", "group": "Search", "description": "Perform a search for the suffix 'ly' and highlight the results." },
+        { "done": true, "filename": "searchIgnorePunctuation.js", "name": "Search the document text (ignorePunct)", "group": "Search", "description": "Perform a search for 'For example you' that ignores punctuation and highlight the results." },
+        { "done": true, "filename": "searchWildCard.js", "name": "Search the document text (*)", "group": "Search", "description": "Perform a search for 'to*' and highlight the results." },
+
         { "done": true, "filename": "sectionInsertTextHeader.js", "name": "Insert a header", "group": "Section", "description": "Insert text into header and wrap the header in a content control." },
         { "done": true, "filename": "sectionGetParagraphs.js", "name": "Get all paragraphs in a section", "group": "Section", "description": "Gets the paragraphs from the first section." }
         
@@ -85,9 +96,7 @@
         { "name": "ContentControl" },
         { "name": "Document" },
         { "name": "Formatting" },
-        { "name": "Others" },
         { "name": "Paragraph" },
-        { "name": "Picture" },
         { "name": "Range" },
         { "name": "Search" },
         { "name": "Section" }
