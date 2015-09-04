@@ -1,14 +1,14 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var tables = ctx.workbook.tables.load();
-ctx.executeAsync().then(function () {
-	for (var i = 0; i < tables.count; i++)
-	{
-		console.log(tables.items[i].name);
-	}
-	console.log("done");
+Excel.run(function (ctx) {
+	var tables = ctx.workbook.tables.load("name");
+	return ctx.sync().then(function() {
+		for (var i = 0; i < tables.items.length; i++)
+		{
+			console.log(tables.items[i].name);
+		}
+		console.log("done");
+	});
 });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

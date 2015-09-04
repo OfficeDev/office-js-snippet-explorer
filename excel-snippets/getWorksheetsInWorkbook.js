@@ -1,11 +1,12 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var worksheets = ctx.workbook.worksheets.load();
-ctx.executeAsync().then(function() {
-	for (var i = 0; i < worksheets.items.length; i++) {
-		console.log(worksheets.items[i].name);
-	}
-	console.log("done");
+Excel.run(function (ctx) {
+	var worksheets = ctx.workbook.worksheets.load("name");
+	return ctx.sync().then(function () {
+		for (var i = 0; i < worksheets.items.length; i++) {
+			console.log(worksheets.items[i].name);
+		}
+		console.log("done");
+	});	
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

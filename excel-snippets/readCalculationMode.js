@@ -1,11 +1,10 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var application = ctx.workbook.application.load();
-ctx.executeAsync().then(function() {
-	console.log(application.calculationMode);
-	console.log("done");
+Excel.run(function (ctx) {
+	var application = ctx.workbook.application.load("calculationMode");
+	return ctx.sync().then(function () {
+		console.log(application.calculationMode);			
+	});	
 });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

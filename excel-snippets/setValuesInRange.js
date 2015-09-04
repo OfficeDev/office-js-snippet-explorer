@@ -1,8 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var range = ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3");
-range.values = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	var range = ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3");
+	range.values = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

@@ -1,13 +1,14 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var range = ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3").load();
-ctx.executeAsync().then(function() {
-	for (var i = 0; i < range.values.length; i++) {
-		for (var j = 0; j < range.values[i].length; j++) {
-			console.log(range.values[i][j]);
+Excel.run(function (ctx) {
+	var range = ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3").load("values");
+	return ctx.sync().then(function () {
+		for (var i = 0; i < range.values.length; i++) {
+			for (var j = 0; j < range.values[i].length; j++) {
+				console.log(range.values[i][j]);
+			}
 		}
-	}
-	console.log("done");
+		console.log("done");
+	});
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

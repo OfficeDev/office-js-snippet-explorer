@@ -1,11 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var chart = ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0);	
-
-chart.datalabels.visible = true;
-
-ctx.executeAsync().then(function () {
-		console.log("Datalabels Shown");
+Excel.run(function (ctx) {
+	var chart = ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0);
+	chart.datalabels.visible = true;
+	return ctx.sync();
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

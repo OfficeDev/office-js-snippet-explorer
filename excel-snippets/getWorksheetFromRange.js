@@ -1,11 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var selectedRangeWorksheet = ctx.workbook.getSelectedRange().worksheet.load();
-ctx.executeAsync().then(function () {
-    console.log(selectedRangeWorksheet.name);
-    console.log("done");
-}, function (error) {
-    console.log("An error occurred: " + error.errorCode + ":" + error.errorMessage);
+Excel.run(function (ctx) {
+    var selectedRangeWorksheet = ctx.workbook.getSelectedRange().worksheet.load("name");
+    return ctx.sync().then(function () {
+        console.log(selectedRangeWorksheet.name);
+    });
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

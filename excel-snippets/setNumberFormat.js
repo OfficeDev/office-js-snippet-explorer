@@ -1,7 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-ctx.workbook.worksheets.getActiveWorksheet().getRange("A1").numberFormat = "d-mmm";
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	ctx.workbook.worksheets.getActiveWorksheet().getRange("A1").numberFormat = "d-mmm";
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

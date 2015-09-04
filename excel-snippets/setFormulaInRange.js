@@ -1,8 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var range = ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3");
-range.formulas = "=RAND()*17";
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3").formulas = "=RAND()*17";
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 
