@@ -1,7 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-ctx.workbook.worksheets.add("Sheet" + Math.floor(Math.random()*100000).toString());
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	ctx.workbook.worksheets.add("Sheet" + Math.floor(Math.random()*100000).toString());
+	return ctx.sync();	
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

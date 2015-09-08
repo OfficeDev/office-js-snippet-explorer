@@ -1,8 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-ctx.workbook.tables.add('Sheet1!A1:E7', true);
-ctx.executeAsync().then();
-
+Excel.run(function (ctx) {
+	ctx.workbook.tables.add('Sheet1!A1:E7', true);
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

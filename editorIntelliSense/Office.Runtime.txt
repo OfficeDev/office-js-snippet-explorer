@@ -71,6 +71,7 @@ declare module OfficeExtension {
         private parseSelectExpand(select);
         private executeAsyncPrivate(doneCallback, failCallback);
         executeAsync(): IPromise<ClientRequestResult>;
+        sync(): IPromise<ClientRequestResult>;
         _nextId(): number;
     }
 }

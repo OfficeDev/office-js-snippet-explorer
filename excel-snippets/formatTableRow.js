@@ -1,8 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var range = ctx.workbook.tables.getItem('Table1').rows.getItemAt(1).getRange();
-range.format.fill.color = "#00AA00";
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	var range = ctx.workbook.tables.getItem('Table1').rows.getItemAt(1).getRange();
+	range.format.fill.color = "#00AA00";
+	return ctx.sync();
+}
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

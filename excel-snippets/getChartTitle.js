@@ -1,9 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var title = ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0).title.load();	
-ctx.executeAsync().then(function () {
+Excel.run(function (ctx) {
+	var title = ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0).title.load("text");
+	return ctx.sync().then(function() {
 		console.log(title.text);
-		console.log("done");
+	});
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

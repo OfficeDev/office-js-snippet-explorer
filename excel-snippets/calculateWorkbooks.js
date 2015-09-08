@@ -1,7 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-ctx.workbook.application.calculate(Excel.CalculationType.full);
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	ctx.workbook.application.calculate(Excel.CalculationType.full);
+	return ctx.sync();	
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

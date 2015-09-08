@@ -1,9 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var activeWorksheet = ctx.workbook.worksheets.getActiveWorksheet().load();
-ctx.executeAsync().then(function () {
-	console.log(activeWorksheet.name);
-	console.log("done");
+Excel.run(function (ctx) {
+	var activeWorksheet = ctx.workbook.worksheets.getActiveWorksheet().load("name");
+	return ctx.sync().then(function () {
+		console.log(activeWorksheet.name);
+	});
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

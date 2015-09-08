@@ -1,9 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var selectedRange = ctx.workbook.getSelectedRange().load();
-ctx.executeAsync().then(function () {
-	console.log(selectedRange.address);
-	console.log("done");
+Excel.run(function (ctx) {
+	var selectedRange = ctx.workbook.getSelectedRange().load();
+	return ctx.sync().then(function() {
+		console.log(selectedRange.address);
+	});
 });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

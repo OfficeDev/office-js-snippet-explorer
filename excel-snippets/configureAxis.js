@@ -1,14 +1,14 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var chart = ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0);	
+Excel.run(function (ctx) {
+	var chart = ctx.workbook.worksheets.getActiveSheet().charts.getItemAt(0);	
+	
+	chart.axes.valueAxis.maximum = 5;
+	chart.axes.valueAxis.minimum = 0;
+	chart.axes.valueAxis.majorUnit = 1;
+	chart.axes.valueAxis.minorUnit = 0.2;
 
-chart.axes.valueAxis.maximum = 5;
-chart.axes.valueAxis.minimum = 0;
-chart.axes.valueAxis.majorUnit = 1;
-chart.axes.valueAxis.minorUnit = 0.2;
-
-ctx.executeAsync().then();
-
+	return ctx.sync();	
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

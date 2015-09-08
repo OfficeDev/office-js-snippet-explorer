@@ -1,8 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var tableRows = ctx.workbook.tables.getItem('Table1').rows;
-tableRows.add(3, [[1,2,3,4,5]]);
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	ctx.workbook.tables.getItem('Table1').rows.add(3, [[1,2,3,4,5]]);
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

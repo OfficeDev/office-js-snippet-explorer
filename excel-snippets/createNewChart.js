@@ -1,8 +1,9 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-var range = ctx.workbook.names.getItem("MyChartData").getRange();
-var chart = ctx.workbook.worksheets.getItem("Sheet1").charts.add(Excel.ChartType.pie, range, Excel.ChartSeriesBy.auto);
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	var range = ctx.workbook.names.getItem("MyChartData").getRange();
+	var chart = ctx.workbook.worksheets.getItem("Sheet1").charts.add(Excel.ChartType.pie, range, Excel.ChartSeriesBy.auto);
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

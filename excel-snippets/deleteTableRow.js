@@ -1,7 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Excel.RequestContext();
-ctx.workbook.tables.getItem('Table1').rows.getItemAt(3).delete();
-ctx.executeAsync().then();
+Excel.run(function (ctx) {
+	ctx.workbook.tables.getItem('Table1').rows.getItemAt(3).delete();
+	return ctx.sync();
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

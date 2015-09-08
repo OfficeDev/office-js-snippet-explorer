@@ -1,17 +1,17 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 //Create Table1
 Excel.run(function (ctx) {
-    var table = ctx.workook.tables.add("Sheet1!A1:C4", true).load("name");
+    var table = ctx.workbook.tables.add("Sheet1!A1:C4", true).load("name");
     return ctx.sync()
         .then(function() {
             Office.context.document.bindings.addFromNamedItemAsync(table.name, Office.CoercionType.Table, { id: "myBinding" }, function (asyncResult) {
                 if (asyncResult.status == "failed") {
-                    console.log("Action failed with error: " asyncResult.error.message)
+                    console.log("Action failed with error: " + asyncResult.error.message)
                 } else {
                     // If succeeded, then add event handler to the table binding.
                     Office.select("bindings#myBinding").addHandlerAsync(Office.EventType.BindingDataChanged, onBindingDataChanged);
                 }
-            };
+            });
         });
 }).catch(function (error) {
     console.log(JSON.stringify(error));

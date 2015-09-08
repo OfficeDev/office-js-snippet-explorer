@@ -522,4 +522,5 @@ declare module Word {
         constructor(url?: string);
         document: Document;
     }
+    export function run(batch: (ctx: Excel.RequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>; 
 }

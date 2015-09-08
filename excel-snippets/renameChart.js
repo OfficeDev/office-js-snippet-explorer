@@ -3,7 +3,6 @@ Excel.run(function (ctx) {
 	ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0).name = "Chart1";
 	return ctx.sync();
 });
-
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

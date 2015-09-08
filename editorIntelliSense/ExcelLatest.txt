@@ -2013,4 +2013,5 @@ declare module Excel {
         constructor(url?: string);
         workbook: Workbook;
     }
+    export function run(batch: (ctx: Excel.RequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>; 
 }
