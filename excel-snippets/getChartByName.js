@@ -1,6 +1,6 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
-	var chart = ctx.workbook.worksheets.getActiveSheet().charts.getItem("Chart1").load("name");
+	var chart = ctx.workbook.worksheets.getActiveWorksheet().charts.getItem("Chart1").load("name");
 	return ctx.sync().then(function () {
 		console.log(chart.name);		
 	});

@@ -1,6 +1,6 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
-	ctx.workbook.worksheets.getItem("Sheet1").charts.getItemAt(0).name = "Chart1";
+	ctx.workbook.worksheets.getActiveWorksheet().charts.getItemAt(0).name = "Chart1";
 	return ctx.sync();
 });
 /*

@@ -1,7 +1,7 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
     var originalRange = ctx.workbook.worksheets.getActiveWorksheet().getRange("A1:C4");
-    var newRange = originalRange.insert();
+    var newRange = originalRange.insert(Excel.InsertShiftDirection.down);
     originalRange.format.fill.color = "Red";
     newRange.format.fill.color = "Yellow";
     return ctx.sync();

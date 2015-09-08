@@ -1,6 +1,6 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
-	var chart = ctx.workbook.worksheets.getActiveSheet.charts.getItemAt(0);	
+	var chart = ctx.workbook.worksheets.getActiveWorksheet.charts.getItemAt(0);	
 	chart.series.getItemAt(0).lineFormat.color = "#FF0000";
 	return ctx.sync();	
 });

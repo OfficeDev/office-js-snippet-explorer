@@ -1,6 +1,6 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
-	var sheet = ctx.workbook.worksheets.getActiveSheet();
+	var sheet = ctx.workbook.worksheets.getActiveWorksheet();
 	
 	var categoriesRange = sheet.getRange("A2:A5");
 	categoriesRange.values = [

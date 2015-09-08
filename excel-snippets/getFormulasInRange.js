@@ -1,6 +1,6 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
-	var range = ctx.workbook.worksheets.getItem("Sheet1").getRange("A1:C3").load("formulas");
+	var range = ctx.workbook.worksheets.getActiveWorksheet().getRange("A1:C3").load("formulas");
 	return ctx.sync().then(function() {
 		for (var i = 0; i < range.formulas.length; i++) {
 			for (var j = 0; j < range.formulas[i].length; j++) {

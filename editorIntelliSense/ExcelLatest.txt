@@ -333,7 +333,7 @@ declare module Excel {
          *
          * @param shift Specifies which way to shift the cells. Can be one of the following: Down (default option) or Right. See Excel.InsertShiftDirection
          */
-        insert(shift: string): void;
+        insert(shift: string): Excel.Range;
         select(): void;
         /**
          * Load properties

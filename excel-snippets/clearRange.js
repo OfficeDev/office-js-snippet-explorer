@@ -1,6 +1,6 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 Excel.run(function (ctx) {
-	ctx.workbook.worksheets.getActiveSheet().getRange("A1:C1").clear(Excel.ClearApplyTo.contents);	
+	ctx.workbook.worksheets.getActiveWorksheet().getRange("A1:C1").clear(Excel.ClearApplyTo.contents);	
 	return ctx.sync()
 });
 /*
