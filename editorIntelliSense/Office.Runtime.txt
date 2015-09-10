@@ -22,6 +22,8 @@ declare module OfficeExtension {
         private m_objectPath;
         constructor(context: ClientRequestContext, objectPath: ObjectPath);
         context: ClientRequestContext;
+        _objectPath: ObjectPath;
+        _handleResult(value: any): void;
     }
 }
 declare module OfficeExtension {
@@ -38,6 +40,7 @@ declare module OfficeExtension {
             [index: number]: string;
         };
         addAction(action: Action): void;
+        hasActions: boolean;
         addTrace(actionId: number, message: string): void;
         addReferencedObjectPath(objectPath: ObjectPath): void;
         addReferencedObjectPaths(objectPaths: Array<ObjectPath>): void;
@@ -49,8 +52,8 @@ declare module OfficeExtension {
 }
 declare module OfficeExtension {
     interface LoadOption {
-        select?: string;
-        expand?: string;
+        select?: string | string[];
+        expand?: string | string[];
         top?: number;
         skip?: number;
     }
@@ -59,6 +62,7 @@ declare module OfficeExtension {
         private m_pendingRequest;
         private m_url;
         private m_references;
+        _autoCleanupReferences: boolean;
         _requestExecutor: IRequestExecutor;
         _rootObject: ClientObject;
         _customData: string;
@@ -70,8 +74,9 @@ declare module OfficeExtension {
         trace(message: string): void;
         private parseSelectExpand(select);
         private executeAsyncPrivate(doneCallback, failCallback);
-        executeAsync(): IPromise<ClientRequestResult>;
-        sync(): IPromise<ClientRequestResult>;
+        executeAsync<T>(passThroughValue?: T): IPromise<T>;
+        sync<T>(passThroughValue?: T): IPromise<T>;
+        static _run<TResult, TContext extends ClientRequestContext>(ctxInitializer: () => TContext, batch: (ctx: TContext) => OfficeExtension.IPromise<any>, numCleanupAttempts?: number, retryDelay?: number, onCleanupSuccess?: (counter: number) => void, onCleanupFailure?: (counter: number) => void): IPromise<TResult>;
         _nextId(): number;
     }
 }
@@ -79,14 +84,6 @@ declare module OfficeExtension {
     enum ClientRequestFlags {
         None = 0,
         WriteOperation = 1,
-    }
-}
-declare module OfficeExtension {
-    class ClientRequestResult {
-        errorCode: string;
-        errorMessage: string;
-        traceMessages: Array<string>;
-        constructor(traceMessages: Array<string>);
     }
 }
 declare module OfficeExtension {
@@ -117,15 +114,14 @@ declare module OfficeExtension {
         constructor(message?: string);
     }
     class RuntimeError extends Error {
+        code: string;
         traceMessages: Array<string>;
         debugInfo: {
             errorLocation?: string;
         };
-        constructor(name: string, message: string, traceMessages: Array<string>, debugInfo: {
+        constructor(code: string, message: string, traceMessages: Array<string>, debugInfo: {
             errorLocation?: string;
         });
-        errorCode: string;
-        errorMessage: string;
         toString(): string;
     }
 }
@@ -133,6 +129,7 @@ declare module OfficeExtension {
     class ErrorCodes {
         static accessDenied: string;
         static generalException: string;
+        static activityLimitReached: string;
     }
 }
 declare module OfficeExtension {
@@ -292,6 +289,7 @@ declare module OfficeExtension {
 declare module OfficeExtension {
     class OfficeJsRequestExecutor implements IRequestExecutor {
         private static OfficeJsErrorCode_ooeNoCapability;
+        private static OfficeJsErrorCode_ooeActivityLimitReached;
         executeAsync(customData: string, requestFlags: number, requestMessage: IRequestExecutorRequestMessage, callback: (responseMessage: IRequestExecutorResponseMessage) => void): void;
     }
 }
@@ -344,10 +342,18 @@ declare module OfficeExtension {
 declare module OfficeExtension {
     class References {
         private m_context;
+        private _autoCleanupList;
         constructor(context: ClientRequestContext);
-        add(clientObject: ClientObject): void;
-        remove(clientObject: ClientObject): void;
-        removeAll(): void;
+        add(object: ClientObject): void;
+        add(objects: ClientObject[]): void;
+        _autoAdd(object: ClientObject): void;
+        private _addCommon(object, isExplicitlyAdded);
+        remove(object: ClientObject): void;
+        remove(objects: ClientObject[]): void;
+        private _removeCommon(object);
+        _retrieveAndClearAutoCleanupList(): {
+            [id: number]: ClientObject;
+        };
     }
 }
 declare module OfficeExtension {
@@ -355,6 +361,8 @@ declare module OfficeExtension {
         static invalidObjectPath: string;
         static propertyNotLoaded: string;
         static invalidRequestContext: string;
+        static invalidArgument: string;
+        static runTaskAsyncMustReturnPromise: string;
     }
 }
 declare module OfficeExtension {
@@ -388,12 +396,18 @@ declare module OfficeExtension {
         static validateObjectPath(clientObject: ClientObject): void;
         static validateReferencedObjectPaths(objectPaths: Array<ObjectPath>): void;
         static validateContext(context: ClientRequestContext, obj: ClientObject): void;
+        private static _logEnabled;
         static log(message: string): void;
         static load(clientObj: ClientObject, option?: string | LoadOption): void;
         private static s_underscoreCharCode;
         static throwError(resourceId: string, arg?: string): void;
+        static createRuntimeError(code: string, message: string, location: string): RuntimeError;
+        static _getResourceString(resourceId: string, arg?: string): string;
         static throwIfNotLoaded(propertyName: string, fieldValue: any): void;
         static getObjectPathExpression(objectPath: ObjectPath): string;
+        static _createPromiseFromResult<T>(value: T): IPromise<T>;
+        static _addActionResultHandler(clientObj: ClientObject, action: Action, resultHandler: IResultHandler): void;
+        static _handleNavigationPropertyResults(clientObj: ClientObject, objectValue: any, propertyNames: Array<string>): void;
         private static normalizeName(name);
     }
 }

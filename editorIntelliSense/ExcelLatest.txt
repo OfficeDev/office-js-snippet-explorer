@@ -24,7 +24,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Application;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Application;
     }
     /**
      *
@@ -61,6 +61,11 @@ declare module Excel {
          * Represents a collection of worksheets associated with the workbook. Read-only.
          */
         worksheets: Excel.WorksheetCollection;
+        /**
+         *
+         * Gets the currently selected range from the workbook.
+         *
+         */
         getSelectedRange(): Excel.Range;
         _GetObjectByReferenceId(bstrReferenceId: string): OfficeExtension.ClientResult<any>;
         _GetObjectTypeNameByReferenceId(bstrReferenceId: string): OfficeExtension.ClientResult<string>;
@@ -74,7 +79,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Workbook;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Workbook;
     }
     /**
      *
@@ -86,6 +91,7 @@ declare module Excel {
         private m_name;
         private m_position;
         private m_tables;
+        private m_visibility;
         /**
          *
          * Returns collection of charts that are part of the worksheet. Read-only.
@@ -103,7 +109,7 @@ declare module Excel {
         id: string;
         /**
          *
-         * The display name of the worksheet. Read-only.
+         * The display name of the worksheet.
          */
         name: string;
         /**
@@ -111,7 +117,22 @@ declare module Excel {
          * The zero-based position of the worksheet within the workbook.
          */
         position: number;
+        /**
+         *
+         * The Visibility of the worksheet, Read-only.
+         */
+        visibility: string;
+        /**
+         *
+         * Activate the worksheet in the Excel UI.
+         *
+         */
         activate(): void;
+        /**
+         *
+         * Deletes the worksheet from the workbook.
+         *
+         */
         delete(): void;
         /**
          *
@@ -128,6 +149,11 @@ declare module Excel {
          * @param address The address or the name of the range. If not specified, the entire worksheet range is returned.
          */
         getRange(address?: string): Excel.Range;
+        /**
+         *
+         * The used range is the smallest range than encompasses any cells that have a value or formatting assigned to them. If the worksheet is blank, this function will return the top left cell.
+         *
+         */
         getUsedRange(): Excel.Range;
         /** Handle results returned from the document
          * @private
@@ -136,7 +162,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Worksheet;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Worksheet;
     }
     /**
      *
@@ -153,6 +179,11 @@ declare module Excel {
          * @param name The name of the worksheet to be added. If specified, name should be unqiue. If not specified, Excel determines the name of the new worksheet.
          */
         add(name?: string): Excel.Worksheet;
+        /**
+         *
+         * Gets the currently active worksheet in the workbook.
+         *
+         */
         getActiveWorksheet(): Excel.Worksheet;
         /**
          *
@@ -160,7 +191,7 @@ declare module Excel {
          *
          * @param index The Name or ID of the worksheet.
          */
-        getItem(index: string): Excel.Worksheet;
+        getItem(key: string): Excel.Worksheet;
         /** Handle results returned from the document
          * @private
          */
@@ -168,7 +199,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.WorksheetCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.WorksheetCollection;
     }
     /**
      *
@@ -258,7 +289,7 @@ declare module Excel {
         text: Array<Array<any>>;
         /**
          *
-         * Represents the type of data of each cell
+         * Represents the type of data of each cell. Read-only.
          */
         valueTypes: Array<Array<string>>;
         /**
@@ -266,18 +297,19 @@ declare module Excel {
          * Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.
          */
         values: Array<Array<any>>;
+        _ReferenceId: string;
         /**
          *
          * Clear range values, format, fill, border, etc.
          *
-         * @param applyTo Determines the type of clear action. Possible values are: All (default option), Format, and Content.
+         * @param applyTo Determines the type of clear action. See Excel.ClearApplyTo for details.
          */
         clear(applyTo?: string): void;
         /**
          *
          * Deletes the cells associated with the range.
          *
-         * @param shift Specifies which way to shift the cells. Possible values are: Up (default option) or Left. See Excel.DeleteShiftDirection.
+         * @param shift Specifies which way to shift the cells. See Excel.DeleteShiftDirection for details.
          */
         delete(shift: string): void;
         /**
@@ -302,7 +334,17 @@ declare module Excel {
          * @param column Column number of the range to be retrieved. Zero-indexed.
          */
         getColumn(column: number): Excel.Range;
+        /**
+         *
+         * Gets an object that represents the entire column of the range.
+         *
+         */
         getEntireColumn(): Excel.Range;
+        /**
+         *
+         * Gets an object that represents the entire row of the range.
+         *
+         */
         getEntireRow(): Excel.Range;
         /**
          *
@@ -311,6 +353,24 @@ declare module Excel {
          * @param anotherRange The range object or range address that will be used to determine the intersection of ranges.
          */
         getIntersection(anotherRange: Excel.Range | string): Excel.Range;
+        /**
+         *
+         * Gets the last cell within the range. For example, the last cell of "B2:D5" is "D5".
+         *
+         */
+        getLastCell(): Excel.Range;
+        /**
+         *
+         * Gets the last column within the range. For example, the last column of "B2:D5" is "D2:D5".
+         *
+         */
+        getLastColumn(): Excel.Range;
+        /**
+         *
+         * Gets the last row within the range. For example, the last row of "B2:D5" is "B5:D5".
+         *
+         */
+        getLastRow(): Excel.Range;
         /**
          *
          * Gets an object which represents a range that's offset from the specified range. The dimension of the returned range will match this range. If the resulting range is forced outside the bounds of the worksheet grid, an exception will be thrown.
@@ -326,19 +386,35 @@ declare module Excel {
          * @param row Row number of the range to be retrieved. Zero-indexed.
          */
         getRow(row: number): Excel.Range;
+        /**
+         *
+         * Returns the used range of the given range object.
+         *
+         */
         getUsedRange(): Excel.Range;
         /**
          *
-         * Inserts a cell or a range of cells into the worksheet in place of this range, and shifts the other cells to make space.
+         * Inserts a cell or a range of cells into the worksheet in place of this range, and shifts the other cells to make space. Returns a new Range object at the now blank space.
          *
-         * @param shift Specifies which way to shift the cells. Can be one of the following: Down (default option) or Right. See Excel.InsertShiftDirection
+         * @param shift Specifies which way to shift the cells. See Excel.InsertShiftDirection for details.
          */
         insert(shift: string): Excel.Range;
+        /**
+         *
+         * Selects the specified range in the Excel UI.
+         *
+         */
         select(): void;
+        _KeepReference(): void;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Range;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Range;
+        _initReferenceId(value: string): void;
     }
     /**
      *
@@ -362,7 +438,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.NamedItemCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.NamedItemCollection;
     }
     /**
      *
@@ -395,6 +471,11 @@ declare module Excel {
          */
         visible: boolean;
         _Id: string;
+        /**
+         *
+         * Returns the range object that is associated with the name. Throws an exception if the named item's type is not a range.
+         *
+         */
         getRange(): Excel.Range;
         /** Handle results returned from the document
          * @private
@@ -403,7 +484,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.NamedItem;
+        load(option?: string | OfficeExtension.LoadOption): Excel.NamedItem;
     }
     /**
      *
@@ -422,8 +503,23 @@ declare module Excel {
          * Returns the type of the binding. See Excel.BindingType for details. Read-only.
          */
         type: string;
+        /**
+         *
+         * Returns the range represented by the binding. Will throw an error if binding is not of the correct type.
+         *
+         */
         getRange(): Excel.Range;
+        /**
+         *
+         * Returns the table represented by the binding. Will throw an error if binding is not of the correct type.
+         *
+         */
         getTable(): Excel.Table;
+        /**
+         *
+         * Returns the text represented by the binding. Will throw an error if binding is not of the correct type.
+         *
+         */
         getText(): OfficeExtension.ClientResult<string>;
         /** Handle results returned from the document
          * @private
@@ -432,7 +528,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Binding;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Binding;
     }
     /**
      *
@@ -452,7 +548,7 @@ declare module Excel {
          *
          * Gets a binding object by ID.
          *
-         * @param id Id of the binding object to be retrieved. Zero-indexed.
+         * @param id Id of the binding object to be retrieved.
          */
         getItem(id: string): Excel.Binding;
         /**
@@ -469,7 +565,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.BindingCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.BindingCollection;
     }
     /**
      *
@@ -499,7 +595,7 @@ declare module Excel {
          *
          * @param id Name or ID of the table to be retrieved.
          */
-        getItem(id: number | string): Excel.Table;
+        getItem(key: number | string): Excel.Table;
         /**
          *
          * Gets a table based on its position in the collection.
@@ -514,7 +610,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.TableCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.TableCollection;
     }
     /**
      *
@@ -563,10 +659,35 @@ declare module Excel {
          * Constant value that represents the Table style. Possible values are: TableStyleLight1 thru TableStyleLight21, TableStyleMedium1 thru TableStyleMedium28, TableStyleStyleDark1 thru TableStyleStyleDark11. A custom user-defined style present in the workbook can also be specified.
          */
         style: string;
+        /**
+         *
+         * Deletes the table.
+         *
+         */
         delete(): void;
+        /**
+         *
+         * Gets the range object associated with the data body of the table.
+         *
+         */
         getDataBodyRange(): Excel.Range;
+        /**
+         *
+         * Gets the range object associated with header row of the table.
+         *
+         */
         getHeaderRowRange(): Excel.Range;
+        /**
+         *
+         * Gets the range object associated with the entire table.
+         *
+         */
         getRange(): Excel.Range;
+        /**
+         *
+         * Gets the range object associated with totals row of the table.
+         *
+         */
         getTotalRowRange(): Excel.Range;
         /** Handle results returned from the document
          * @private
@@ -575,7 +696,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Table;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Table;
     }
     /**
      *
@@ -605,7 +726,7 @@ declare module Excel {
          *
          * @param id Column Name or ID.
          */
-        getItem(id: number | string): Excel.TableColumn;
+        getItem(key: number | string): Excel.TableColumn;
         /**
          *
          * Gets a column based on its position in the collection.
@@ -620,7 +741,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.TableColumnCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.TableColumnCollection;
     }
     /**
      *
@@ -651,15 +772,44 @@ declare module Excel {
          * Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.
          */
         values: Array<Array<any>>;
+        /**
+         *
+         * Deletes the column from the table.
+         *
+         */
         delete(): void;
+        /**
+         *
+         * Gets the range object associated with the data body of the column.
+         *
+         */
         getDataBodyRange(): Excel.Range;
+        /**
+         *
+         * Gets the range object associated with the header row of the column.
+         *
+         */
         getHeaderRowRange(): Excel.Range;
+        /**
+         *
+         * Gets the range object associated with the entire column.
+         *
+         */
         getRange(): Excel.Range;
+        /**
+         *
+         * Gets the range object associated with the totals row of the column.
+         *
+         */
         getTotalRowRange(): Excel.Range;
+        /** Handle results returned from the document
+         * @private
+         */
+        _handleResult(value: any): void;
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.TableColumn;
+        load(option?: string | OfficeExtension.LoadOption): Excel.TableColumn;
     }
     /**
      *
@@ -697,7 +847,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.TableRowCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.TableRowCollection;
     }
     /**
      *
@@ -716,7 +866,17 @@ declare module Excel {
          * Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.
          */
         values: Array<Array<any>>;
+        /**
+         *
+         * Deletes the row from the table.
+         *
+         */
         delete(): void;
+        /**
+         *
+         * Returns the range object associated with the entire row.
+         *
+         */
         getRange(): Excel.Range;
         /** Handle results returned from the document
          * @private
@@ -725,7 +885,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.TableRow;
+        load(option?: string | OfficeExtension.LoadOption): Excel.TableRow;
     }
     /**
      *
@@ -775,7 +935,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.RangeFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.RangeFormat;
     }
     /**
      *
@@ -788,6 +948,11 @@ declare module Excel {
          * HTML color code representing the color of the border line, of the form #RRGGBB (e.g. "FFA500") or as a named HTML color (e.g. "orange")
          */
         color: string;
+        /**
+         *
+         * Resets the range background.
+         *
+         */
         clear(): void;
         /** Handle results returned from the document
          * @private
@@ -796,7 +961,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.RangeFill;
+        load(option?: string | OfficeExtension.LoadOption): Excel.RangeFill;
     }
     /**
      *
@@ -809,22 +974,22 @@ declare module Excel {
         private m_weight;
         /**
          *
-         * HTML color code representing the color of the border line, of the form #RRGGBB (e.g. "FFA500") or as a named HTML color (e.g. "orange")
+         * HTML color code representing the color of the border line, of the form #RRGGBB (e.g. "FFA500") or as a named HTML color (e.g. "orange").
          */
         color: string;
         /**
          *
-         * Constant value that indicates the specific side of the border. Refer to Excel.BorderIndex for details. Read-only.
+         * Constant value that indicates the specific side of the border. See Excel.BorderIndex for details. Read-only.
          */
         sideIndex: string;
         /**
          *
-         * One of the constants of line style specifying the line style for the border. Refer to Excel.BorderLineStyle for details.
+         * One of the constants of line style specifying the line style for the border. See Excel.BorderLineStyle for details.
          */
         style: string;
         /**
          *
-         * BorderWeight value that specifies the weight of the border around a range. Refer to Excel.BorderWeight for details.
+         * Specifies the weight of the border around a range. See Excel.BorderWeight for details.
          */
         weight: string;
         /** Handle results returned from the document
@@ -834,7 +999,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.RangeBorder;
+        load(option?: string | OfficeExtension.LoadOption): Excel.RangeBorder;
     }
     /**
      *
@@ -854,7 +1019,7 @@ declare module Excel {
          *
          * Gets a border object using its name
          *
-         * @param index Index value of the border object to be retrieved.
+         * @param index Index value of the border object to be retrieved. See Excel.BorderIndex for details.
          */
         getItem(index: string): Excel.RangeBorder;
         /**
@@ -871,7 +1036,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.RangeBorderCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.RangeBorderCollection;
     }
     /**
      *
@@ -911,7 +1076,7 @@ declare module Excel {
         size: number;
         /**
          *
-         * Type of underline applied to the font. Refer to Excel.RangeUnderlineStyle for details.
+         * Type of underline applied to the font. See Excel.RangeUnderlineStyle for details.
          */
         underline: string;
         /** Handle results returned from the document
@@ -921,7 +1086,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.RangeFont;
+        load(option?: string | OfficeExtension.LoadOption): Excel.RangeFont;
     }
     /**
      *
@@ -941,11 +1106,11 @@ declare module Excel {
          *
          * Creates a new chart.
          *
-         * @param type Represents the type of a chart. See Excel.ChartType.
-         * @param sourceData The address or name of the range that contains the source data. If an address or a worksheet-scoped name is used, it must include the worksheet name (e.g. "Sheet1!A5:B9").
-         * @param seriesBy Specifies the way columns or rows are used as data series on the chart. Can be one of the following: Auto (default), Rows, Columns. See Excel.ChartSeriesBy for details.
+         * @param type Represents the type of a chart. See Excel.ChartType for details.
+         * @param sourceData The Range object corresponding to the source data.
+         * @param seriesBy Specifies the way columns or rows are used as data series on the chart. See Excel.ChartSeriesBy for details.
          */
-        add(type: string, sourceData: Excel.Range | string, seriesBy?: string): Excel.Chart;
+        add(type: string, sourceData: Excel.Range, seriesBy?: string): Excel.Chart;
         /**
          *
          * Gets a chart using its name. If there are multiple charts with the same name, the first one will be returned.
@@ -960,12 +1125,6 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.Chart;
-        /**
-         *
-         * Gets a chart using its ID.
-         *
-         * @param id Id of the chart to be retrieved.
-         */
         _GetItem(id: string): Excel.Chart;
         /** Handle results returned from the document
          * @private
@@ -974,7 +1133,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartCollection;
     }
     /**
      *
@@ -1005,7 +1164,7 @@ declare module Excel {
         dataLabels: Excel.ChartDataLabels;
         /**
          *
-         * Encapsulates the format properties for the chart area.
+         * Encapsulates the format properties for the chart area. Read-only.
          */
         format: Excel.ChartAreaFormat;
         /**
@@ -1049,15 +1208,28 @@ declare module Excel {
          */
         width: number;
         _Id: string;
+        /**
+         *
+         * Deletes the chart object.
+         *
+         */
         delete(): void;
         /**
          *
          * Resets the source data for the chart.
          *
-         * @param sourceData The address or name of the range that contains the source data. If an address or a worksheet-scoped name is used, it must include the worksheet name (e.g. "Sheet1!A5:B9").
+         * @param sourceData The Range object corresponding to the source data.
          * @param seriesBy Specifies the way columns or rows are used as data series on the chart. Can be one of the following: Auto (default), Rows, Columns. See Excel.ChartSeriesBy for details.
          */
-        setData(sourceData: Excel.Range | string, seriesBy?: string): void;
+        setData(sourceData: Excel.Range, seriesBy?: string): void;
+        /**
+         *
+         * Positions the chart relative to cells on the worksheet.
+         *
+         * @param startCell The start cell. This is where the chart will be moved to. The start cell is the top-left or top-right cell, depending on the user's right-to-left display settings.
+         * @param endCell (Optional) The end cell. If specified, the chart's width and height will be set to fully cover up this cell/range.
+         */
+        setPosition(startCell: Excel.Range | string, endCell?: Excel.Range | string): void;
         /** Handle results returned from the document
          * @private
          */
@@ -1065,7 +1237,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.Chart;
+        load(option?: string | OfficeExtension.LoadOption): Excel.Chart;
     }
     /**
      *
@@ -1076,7 +1248,7 @@ declare module Excel {
         private m_font;
         /**
          *
-         * Represents the fill format of an object, which includes interior/background formatting information. Read-only.
+         * Represents the fill format of an object, which includes background formatting information. Read-only.
          */
         fill: Excel.ChartFill;
         /**
@@ -1091,7 +1263,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartAreaFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAreaFormat;
     }
     /**
      *
@@ -1121,7 +1293,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartSeriesCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartSeriesCollection;
     }
     /**
      *
@@ -1153,7 +1325,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartSeries;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartSeries;
     }
     /**
      *
@@ -1164,7 +1336,7 @@ declare module Excel {
         private m_line;
         /**
          *
-         * Represents the fill format of a chart series, which includes interior/background formating information. Read-only.
+         * Represents the fill format of a chart series, which includes background formating information. Read-only.
          */
         fill: Excel.ChartFill;
         /**
@@ -1179,7 +1351,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartSeriesFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartSeriesFormat;
     }
     /**
      *
@@ -1209,7 +1381,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartPointsCollection;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartPointsCollection;
     }
     /**
      *
@@ -1220,7 +1392,7 @@ declare module Excel {
         private m_value;
         /**
          *
-         * Encapsulates the format properties chart point.
+         * Encapsulates the format properties chart point. Read-only.
          */
         format: Excel.ChartPointFormat;
         /**
@@ -1235,7 +1407,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartPoint;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartPoint;
     }
     /**
      *
@@ -1245,7 +1417,7 @@ declare module Excel {
         private m_fill;
         /**
          *
-         * Represents the fill format of a chart, which includes interior/background formating information. Read-only.
+         * Represents the fill format of a chart, which includes background formating information. Read-only.
          */
         fill: Excel.ChartFill;
         /** Handle results returned from the document
@@ -1255,7 +1427,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartPointFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartPointFormat;
     }
     /**
      *
@@ -1287,7 +1459,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartAxes;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxes;
     }
     /**
      *
@@ -1349,7 +1521,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartAxis;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxis;
     }
     /**
      *
@@ -1375,7 +1547,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartAxisFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxisFormat;
     }
     /**
      *
@@ -1407,7 +1579,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartAxisTitle;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxisTitle;
     }
     /**
      *
@@ -1427,7 +1599,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartAxisTitleFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxisTitleFormat;
     }
     /**
      *
@@ -1450,7 +1622,7 @@ declare module Excel {
         format: Excel.ChartDataLabelFormat;
         /**
          *
-         * DataLabelPosition value that represents the position of the data label. See Excel.ChartDataLabelPosition.
+         * DataLabelPosition value that represents the position of the data label. See Excel.ChartDataLabelPosition for details.
          */
         position: string;
         /**
@@ -1495,7 +1667,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartDataLabels;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartDataLabels;
     }
     /**
      *
@@ -1521,7 +1693,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartDataLabelFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartDataLabelFormat;
     }
     /**
      *
@@ -1547,7 +1719,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartGridlines;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartGridlines;
     }
     /**
      *
@@ -1567,7 +1739,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartGridlinesFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartGridlinesFormat;
     }
     /**
      *
@@ -1605,7 +1777,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartLegend;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartLegend;
     }
     /**
      *
@@ -1616,7 +1788,7 @@ declare module Excel {
         private m_font;
         /**
          *
-         * Represents the fill format of an object, which includes interior/background formating information. Read-only.
+         * Represents the fill format of an object, which includes background formating information. Read-only.
          */
         fill: Excel.ChartFill;
         /**
@@ -1631,7 +1803,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartLegendFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartLegendFormat;
     }
     /**
      *
@@ -1669,7 +1841,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartTitle;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartTitle;
     }
     /**
      *
@@ -1680,7 +1852,7 @@ declare module Excel {
         private m_font;
         /**
          *
-         * Represents the fill format of an object, which includes interior/background formating information. Read-only.
+         * Represents the fill format of an object, which includes background formating information. Read-only.
          */
         fill: Excel.ChartFill;
         /**
@@ -1695,13 +1867,18 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartTitleFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartTitleFormat;
     }
     /**
      *
      * Represents the fill formatting for a chart element.
      */
     class ChartFill extends OfficeExtension.ClientObject {
+        /**
+         *
+         * Clear the fill color of a chart element.
+         *
+         */
         clear(): void;
         /**
          *
@@ -1717,7 +1894,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartFill;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartFill;
     }
     /**
      *
@@ -1730,6 +1907,11 @@ declare module Excel {
          * HTML color code representing the color of lines in the chart.
          */
         color: string;
+        /**
+         *
+         * Clear the line format of a chart element.
+         *
+         */
         clear(): void;
         /** Handle results returned from the document
          * @private
@@ -1738,7 +1920,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartLineFormat;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartLineFormat;
     }
     /**
      *
@@ -1763,7 +1945,7 @@ declare module Excel {
         color: string;
         /**
          *
-         * Represents the bold status of italic.
+         * Represents the italic status of the font.
          */
         italic: boolean;
         /**
@@ -1788,7 +1970,7 @@ declare module Excel {
         /**
          * Load properties
          */
-        load(option?: OfficeExtension.LoadOption): Excel.ChartFont;
+        load(option?: string | OfficeExtension.LoadOption): Excel.ChartFont;
     }
     module BindingType {
         var range: string;
@@ -1976,6 +2158,11 @@ declare module Excel {
         var singleAccountant: string;
         var doubleAccountant: string;
     }
+    module SheetVisibility {
+        var visible: string;
+        var hidden: string;
+        var veryHidden: string;
+    }
     module RangeValueType {
         var unknown: string;
         var empty: string;
@@ -2013,5 +2200,5 @@ declare module Excel {
         constructor(url?: string);
         workbook: Workbook;
     }
-    export function run(batch: (ctx: Excel.RequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>; 
+    function run<T>(batch: (ctx: Excel.RequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>;
 }
