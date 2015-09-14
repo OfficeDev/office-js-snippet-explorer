@@ -118,9 +118,9 @@ var OfficeExtension;
             if (this.m_objectPath) {
                 if (!context._processingResult) {
                     OfficeExtension.ActionFactory.createInstantiateAction(context, this);
-                }
-                if ((context._autoCleanupReferences) && (this._KeepReference)) {
-                    context.references._autoAdd(this);
+                    if ((context._autoCleanup) && (this._KeepReference)) {
+                        context.references._autoAdd(this);
+                    }
                 }
             }
         }
@@ -280,6 +280,13 @@ var OfficeExtension;
         });
         Object.defineProperty(ClientRequestContext.prototype, "references", {
             get: function () {
+                return this.trackedObjects;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ClientRequestContext.prototype, "trackedObjects", {
+            get: function () {
                 if (!this.m_references) {
                     this.m_references = new OfficeExtension.References(this);
                 }
@@ -434,7 +441,7 @@ var OfficeExtension;
             var resultOrError;
             return starterPromise.then(function () {
                 ctx = ctxInitializer();
-                ctx._autoCleanupReferences = true;
+                ctx._autoCleanup = true;
                 var batchResult = batch(ctx);
                 if (OfficeExtension.Utility.isNullOrUndefined(batchResult) || (typeof batchResult.then !== 'function')) {
                     OfficeExtension.Utility.throwError(OfficeExtension.ResourceStrings.runTaskAsyncMustReturnPromise);
@@ -449,7 +456,7 @@ var OfficeExtension;
                 resultOrError = error;
             }).then(function () {
                 var itemsToRemove = ctx.references._retrieveAndClearAutoCleanupList();
-                ctx._autoCleanupReferences = false;
+                ctx._autoCleanup = false;
                 for (var key in itemsToRemove) {
                     itemsToRemove[key]._objectPath.isValid = false;
                 }
@@ -1578,7 +1585,7 @@ var OfficeExtension;
             if (OfficeExtension.Utility.isNullOrEmptyString(referenceId) && object._KeepReference) {
                 object._KeepReference();
                 OfficeExtension.ActionFactory.createInstantiateAction(this.m_context, object);
-                if (isExplicitlyAdded && this.m_context._autoCleanupReferences) {
+                if (isExplicitlyAdded && this.m_context._autoCleanup) {
                     delete this._autoCleanupList[object._objectPath.objectPathInfo.Id];
                 }
             }
