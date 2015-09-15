@@ -1,30 +1,38 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get the document.
-var thisDocument = ctx.document;
+// Run a batch operation against the Word object model.
+Word.run(function (ctx) {
+    
+    // Create a proxy object for the document.
+    var thisDocument = ctx.document;
 
-// Queue: load the document save state.
-ctx.load(thisDocument, { select: 'saved'});
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
+    // Queue a commmand to load the document save state.
+    ctx.load(thisDocument, { select: 'saved'});    
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return ctx.sync().then(function () {
+        
         if (thisDocument.saved === false) {
             // Queue: save this document.
             thisDocument.save();
             
-            // Run the batch of commands in the queue.
-            return ctx.executeAsync().then(function () {
+            // Synchronize the document state by executing the queued-up commands, 
+            // and return a promise to indicate task completion.
+            return ctx.sync().then(function () {
                 console.log('Saved the document');
             });
         } else {
             console.log('The document has not changed since the last save.');
         }
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+    });  
+})
+.catch(function (error) {
+    console.log("Error: " + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+});
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
