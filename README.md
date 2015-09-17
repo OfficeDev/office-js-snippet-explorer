@@ -2,8 +2,8 @@
 
 This Office Add-in sample uses Angular. It lets you explore and modify code snippets for ExcelJS and WordJS. You can browse the code snippets at these two locations:
  
-- [Word](http://officesnippetexplorer.azurewebsites.net/#/snippets/word)
-- [Excel](http://officesnippetexplorer.azurewebsites.net/#/snippets/excel)
+- [Word](https://officesnippetexplorer.azurewebsites.net/#/snippets/word)
+- [Excel](https://officesnippetexplorer.azurewebsites.net/#/snippets/excel)
 
 IntelliSense is enabled so that you can see which properties and methods are available on each object. We highly suggest that you run this sample in Excel and Word after you browse the available snippets. The next two sections will show you how you can make this add-in available in Excel and Word. 
 
@@ -30,7 +30,7 @@ Do the following steps to run this sample in Excel 2016:
       </Capabilities>
 
       <DefaultSettings>
-        <SourceLocation DefaultValue="http://officesnippetexplorer.azurewebsites.net/#/add-in/excel"/>
+        <SourceLocation DefaultValue="https://officesnippetexplorer.azurewebsites.net/#/add-in/excel"/>
 
       </DefaultSettings>
       <Permissions>ReadWriteDocument</Permissions>
@@ -70,7 +70,7 @@ Do the following steps to run this sample in Word 2016:
       </Capabilities>
 
       <DefaultSettings>
-        <SourceLocation DefaultValue="http://officesnippetexplorer.azurewebsites.net/#/add-in/word"/>
+        <SourceLocation DefaultValue="https://officesnippetexplorer.azurewebsites.net/#/add-in/word"/>
 
       </DefaultSettings>
       <Permissions>ReadWriteDocument</Permissions>
