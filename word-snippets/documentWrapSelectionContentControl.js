@@ -1,17 +1,17 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 
 // Run a batch operation against the Word object model.
-Word.run(function (ctx) {
+Word.run(function (context) {
     
     // Create a proxy range object for the current selection.
-    var range = ctx.document.getSelection();
+    var range = context.document.getSelection();
 
     // Queue a commmand to wrap the selection in a content control.
     range.insertContentControl();
     
     // Synchronize the document state by executing the queued-up commands, 
     // and return a promise to indicate task completion.
-    return ctx.sync().then(function () {
+    return context.sync().then(function () {
         console.log('Wrapped the selection with a content control.');
     });  
 })

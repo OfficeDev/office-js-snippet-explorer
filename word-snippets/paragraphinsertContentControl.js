@@ -1,38 +1,38 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get all of the paragraphs in the document.
-var paragraphs = ctx.document.body.paragraphs;
-
-// Queue: load the paragraphs.
-ctx.load(paragraphs, { select: "text",
-                       expand: "paragraph"});
-
-// Queue: add a reference to the paragraphs collection
-ctx.references.add(paragraphs);
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-
-        // Queue: get the first paragraph.
-        var paragraph = paragraphs.items[0];
-
-        // Queue: wrap the first paragraph in a rich text content control.
-        paragraph.insertContentControl();
-
-        // Queue: remove the reference to the paragraphs.
-        ctx.references.remove(paragraphs);
-    })
-
-    // Run the batch of commands in the queue.
-    .then(ctx.executeAsync)
-    .then(function () {
-        console.log("Wrapped the first paragraph in a content control.");
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a proxy object for the paragraphs collection.
+    var paragraphs = context.document.body.paragraphs;
+    
+    // Queue a commmand to load the style property for the top 2 paragraphs.
+    // We never perform an empty load. We always must request a property.
+    context.load(paragraphs, {select: 'style', top: 2} );
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        
+        // Queue a command to get the first paragraph.
+        var paragraph = paragraphs.items[0];        
+        
+        // Queue a command to wrap the first paragraph in a rich text content control.
+        paragraph.insertContentControl(); 
+        
+        // Synchronize the document state by executing the queued-up commands, 
+        // and return a promise to indicate task completion.
+        return context.sync().then(function () {
+            console.log('Wrapped the first paragraph in a content control.');
+        });      
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

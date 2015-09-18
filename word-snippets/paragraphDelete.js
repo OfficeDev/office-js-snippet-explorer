@@ -1,38 +1,34 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get all of the paragraphs in the document.
-var paragraphs = ctx.document.body.paragraphs;
-
-// Queue: load the paragraphs.
-ctx.load(paragraphs, { select: "text" });
-
-// Queue: add a reference to the paragraphs collection.
-ctx.references.add(paragraphs);
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-
-        // Queue: get the first paragraph from the collection.
-        var paragraph = paragraphs._GetItem(0);
-
-        // Queue: delete the paragraph.
-        paragraph.delete();
-
-        // Queue: remove the reference to the paragraphs.
-        ctx.references.remove(paragraphs);
-
-        // Run the batch of commands in the queue.
-        return ctx.executeAsync().then(
-           function () {
-               console.log("Deleted the paragraph.");
-           }
-        )
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a proxy object for the paragraphs collection.
+    var paragraphs = context.document.body.paragraphs;
+    
+    // Queue a commmand to load the style property for all of the paragraphs.
+    context.load(paragraphs, 'style');
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        
+        // Queue a command to delete the first paragraph.
+        paragraphs._GetItem(0).delete();    
+        
+        // Synchronize the document state by executing the queued-up commands, 
+        // and return a promise to indicate task completion.
+        return context.sync().then(function () {
+            console.log('Deleted the first paragraph.');
+        });      
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

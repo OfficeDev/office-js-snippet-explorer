@@ -1,38 +1,5 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 
-//var ctx = new Word.RequestContext();
-//
-//// Queue: get all of the content controls in the document.
-//var contentControls = ctx.document.contentControls;
-//
-//// Queue: load the text property for all of content controls. 
-//ctx.load(contentControls, {select:"text"});
-//
-//// Queue: add a reference to the content controls collection.
-////ctx.references.add(contentControls);
-//         
-//// Run the batch of commands in the queue.
-//ctx.executeAsync()
-//    .then(function () {
-//        
-//        // Queue: Delete the first content control and do not keep its contents.
-//        contentControls.items[0].delete(false);
-//    
-//        // Queue: remove references to the content control collection.
-//      //  ctx.references.remove(contentControls);
-//        
-//        // Run the batch of commands in the queue.
-//        return ctx.executeAsync().then(
-//           function () {
-//               console.log("Deleted the first content control.");
-//           }
-//        )
-//    })
-//
-//    .catch(function (error) {
-//        console.log(JSON.stringify(error));
-//    });
-
 // Run a batch operation against the Word object model.
 Word.run(function (context) {
     

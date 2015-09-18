@@ -1,40 +1,35 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get all of the paragraphs in the document.
-var paragraphs = ctx.document.body.paragraphs;
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a proxy object for the paragraphs collection.
+    var paragraphs = context.document.body.paragraphs;
+    
+    // Queue a commmand to load the style property for all of the paragraphs.
+    context.load(paragraphs, 'style');
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        
+        // Queue a a set of commands to get the HTML of the first paragraph.
+        var html = paragraphs._GetItem(0).getHtml();    
+        
+        // Synchronize the document state by executing the queued-up commands, 
+        // and return a promise to indicate task completion.
+        return context.sync().then(function () {
+            console.log('Paragraph HTML: ' + html.value);
+        });      
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
-// Queue: load the paragraphs.
-ctx.load(paragraphs, { select: "text",
-                       expand: "paragraph"});
-
-// Queue: add a reference to the paragraphs collection.
-ctx.references.add(paragraphs);
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-
-        // Queue: get the first paragraph from the collection.
-        var paragraph = paragraphs.items[0];
-
-        // Queue: get the HTML representation of the paragraph.
-        var result = paragraph.getHtml();
-
-        // Queue: remove the reference to the paragraphs.
-        ctx.references.remove(paragraphs);
-
-        // Run the batch of commands in the queue.
-        return ctx.executeAsync().then(
-           function () {
-               console.log(result.value);
-           }
-        )
-
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

@@ -1,17 +1,17 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 
 // Run a batch operation against the Word object model.
-Word.run(function (ctx) {
+Word.run(function (context) {
     
     // Create a proxy object for the document.
-    var thisDocument = ctx.document;
+    var thisDocument = context.document;
 
     // Queue a commmand to load the document save state (on the saved property).
-    ctx.load(thisDocument, 'saved');    
+    context.load(thisDocument, 'saved');    
     
     // Synchronize the document state by executing the queued-up commands, 
     // and return a promise to indicate task completion.
-    return ctx.sync().then(function () {
+    return context.sync().then(function () {
         
         if (thisDocument.saved === false) {
             // Queue a command to save this document.
@@ -19,7 +19,7 @@ Word.run(function (ctx) {
             
             // Synchronize the document state by executing the queued-up commands, 
             // and return a promise to indicate task completion.
-            return ctx.sync().then(function () {
+            return context.sync().then(function () {
                 console.log('Saved the document');
             });
         } else {
