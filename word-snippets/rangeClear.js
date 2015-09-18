@@ -1,19 +1,29 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get the user's current selection and create a range object named objrange.
-// Queue: clear objrange.
-var objrange = ctx.document.getSelection();
-objrange.clear();
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Queue a command to get the current selection and then 
+    // create a proxy range object with the results.
+    var range = context.document.getSelection();
+    
+    // Queue a commmand to clear the contents of the proxy range object.
+    range.clear();
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        console.log('Cleared the selection (range object)');
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
-// Run the set of commands in the queue. In this case, we are clearing the range. 
-ctx.executeAsync()
-    .then(function () {
-        console.log("Done");
-    })
-    .catch(function (error) {
-        console.log("ERROR: " + JSON.stringify(error));
-    });
+
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

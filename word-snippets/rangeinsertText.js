@@ -1,21 +1,28 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get the selected text in the document.
-var objRange = ctx.document.getSelection();
-
-// Queue: insert text at the end of the range.
-objRange.insertText('New text inserted into the range.', Word.InsertLocation.end);
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Queue a command to get the current selection and then 
+    // create a proxy range object with the results.
+    var range = context.document.getSelection();
+    
+    // Queue a commmand to insert the paragraph at the end of the range.
+    range.insertText('New text inserted into the range.', Word.InsertLocation.end);
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
         console.log('Text added to the end of the range.');
-    })
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

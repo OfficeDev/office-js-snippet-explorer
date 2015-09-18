@@ -1,21 +1,30 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get the user's current selection and create a range object named objrange.
-var objRange = ctx.document.getSelection();
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Queue a command to get the current selection and then 
+    // create a proxy range object with the results.
+    var range = context.document.getSelection();
+    
+    // Queue a commmand to get the HTML of the current selection. 
+    var html = range.getHtml();
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        console.log('The HTML read from the document was: ' + html.value);
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
-// Queue: get the user's current selection and create a range object named objrange.
-var result = objRange.getHtml();
 
-// Run the batch of commands in the queue. 
-ctx.executeAsync()
-    .then(function () {
 
-        console.log("The HTML read from the document was: \r\n\r\n" + result.value);
-    })
-    .catch(function (error) {
-        console.log("ERROR: " + JSON.stringify(error));
-    });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 
