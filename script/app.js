@@ -43,7 +43,7 @@ officeJsSnippetApp.config(['$routeProvider', function ($routeProvider) {
 				controller: 'TestAllController',
 				templateUrl: 'partials/testAll.html'
 			})
-		.otherwise({redirectTo: '/snippets/excel' });
+		.otherwise({redirectTo: '/add-in/excel' });
 }]);
 
 officeJsSnippetApp.factory("snippetFactory", ['$http', function ($http) {
