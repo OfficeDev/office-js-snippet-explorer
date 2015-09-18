@@ -1,22 +1,28 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get a handle on the document body.
-var body = ctx.document.body;
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a proxy object for the document body.
+    var body = context.document.body;
+    
+    // Queue a commmand to insert HTML in to the beginning of the body.
+    body.insertHtml('<strong>This is text inserted with body.insertHtml()</strong>',                            Word.InsertLocation.start);
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        console.log('HTML added to the beginning of the document body.');
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
-// Queue: insert HTML in to the beginning of the body.
-body.insertHtml("<strong>This is text inserted with body.insertHtml()</strong>", Word.InsertLocation.start);
 
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-
-        console.log("HTML added to the beginning of the document body.");
-    })
-
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

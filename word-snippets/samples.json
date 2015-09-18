@@ -6,7 +6,7 @@
         { "done": true, "filename": "bodygetHTML.js", "name": "Get the body HTML", "group": "Body", "description": "Get the body HTML." },
         { "done": true, "filename": "bodygetOoxml.js", "name": "Get the body OOXML", "group": "Body", "description": "Get the body OOXML." },
         { "done": true, "filename": "bodygetText.js", "name": "Get the body text", "group": "Body", "description": "Get the body text." },
-        { "done": true, "filename": "bodyinsertBreak.js", "name": "Insert a page break", "group": "Body", "description": "Inserts a line break at the start of the body." },
+        { "done": true, "filename": "bodyinsertBreak.js", "name": "Insert a page break", "group": "Body", "description": "Inserts a page break at the start of the body." },
         { "done": true, "filename": "bodyinsertContentControl.js", "name": "Insert a content control", "group": "Body", "description": "Wraps the body in a content control." },
         { "done": true, "filename": "bodyinsertHtml.js", "name": "Insert HTML content", "group": "Body", "description": "Inserts HTML content at the beginning of the body." },
         { "done": true, "filename": "bodyinsertOoxml.js", "name": "Insert OOXML content", "group": "Body", "description": "Inserts OOXML content at the beginning of the body." },

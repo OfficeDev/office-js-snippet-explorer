@@ -1,50 +1,51 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get a handle on the document body.
-var body = ctx.document.body;
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a proxy object for the document body.
+    var body = context.document.body;
+    
+    // Setup the search options.
+    var options = Word.SearchOptions.newObject(context);
+    options.matchCase = false
 
-// Setup the search options.
-var options = Word.SearchOptions.newObject(ctx);
-options.matchCase = false
+    // Queue a commmand to search the document.
+    var searchResults = context.document.body.search('video', options);
 
-// Queue: search the document.
-var searchResults = ctx.document.body.search("Video", options);
+    // Queue a commmand to load the results.
+    context.load(searchResults, 'text, font');
 
-// Queue: load the results.
-ctx.load(searchResults, {select:"text, font/color", 
-                         expand:"font"});
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        var results = 'Found count: ' + searchResults.items.length + 
+                      '; we highlighted the results.';
 
-// Queue: add a reference to the results.
-ctx.references.add(searchResults);
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-
-        var results = "Found count: " + searchResults.items.length + 
-                      "<br>We highlighted the results and selected the 4th item.";
-
-        // Queue: change the font for each found item. Select the 4th item.
+        // Queue a command to change the font for each found item. 
         for (var i = 0; i < searchResults.items.length; i++) {
-          searchResults.items[i].font.color = "#FF0000"    // Change color to Red
-          searchResults.items[i].font.highlightColor = "#FFFF00";
+          searchResults.items[i].font.color = '#FF0000'    // Change color to Red
+          searchResults.items[i].font.highlightColor = '#FFFF00';
           searchResults.items[i].font.bold = true;
-          if (i === 3)
-            searchResults.items[i].select();
         }
-
-        // Queue: remove the reference to the search results.
-        ctx.references.remove(searchResults);
-
-        // Run the batch of commands in the queue.
-        return ctx.executeAsync().then(function () {
+        
+        // Synchronize the document state by executing the queued-up commands, 
+        // and return a promise to indicate task completion.
+        return context.sync().then(function () {
             console.log(results);
-        });
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+        });  
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
+
+
+
+
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 

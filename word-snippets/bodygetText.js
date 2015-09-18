@@ -1,17 +1,17 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 
 // Run a batch operation against the Word object model.
-Word.run(function (ctx) {
+Word.run(function (context) {
     
     // Create a proxy object for the document body.
-    var body = ctx.document.body;
+    var body = context.document.body;
     
     // Queue a commmand to load the text in document body.
-    ctx.load(body, { select: "text" });
+    context.load(body, 'text');
     
     // Synchronize the document state by executing the queued-up commands, 
     // and return a promise to indicate task completion.
-    return ctx.sync().then(function () {
+    return context.sync().then(function () {
         console.log("Body contents: " + body.text);
     });  
 })
