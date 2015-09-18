@@ -1,36 +1,71 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
+//var ctx = new Word.RequestContext();
+//
+//// Queue: get all of the content controls in the document.
+//var contentControls = ctx.document.contentControls;
+//
+//// Queue: load the text property for all of content controls. 
+//ctx.load(contentControls, {select:"text"});
+//
+//// Queue: add a reference to the content controls collection.
+////ctx.references.add(contentControls);
+//         
+//// Run the batch of commands in the queue.
+//ctx.sync()
+//    .then(function () {
+//        
+//        // Queue: clear the contents of the first content control.
+//        contentControls.items[0].clear();
+//    
+//        // Queue: remove references to the content control collection.
+////        ctx.references.remove(contentControls);
+//        
+//        // Run the batch of commands in the queue.
+//        return ctx.sync().then(
+//           function () {
+//               console.log("Cleared the contents of the first content control.");
+//           }
+//        )
+//    })
+//
+//    .catch(function (error) {
+//        console.log(JSON.stringify(error));
+//    });
 
-// Queue: get all of the content controls in the document.
-var contentControls = ctx.document.contentControls;
-
-// Queue: load the text property for all of content controls. 
-ctx.load(contentControls, {select:"text"});
-
-// Queue: add a reference to the content controls collection.
-//ctx.references.add(contentControls);
-         
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-        
-        // Queue: clear the contents of the first content control.
-        contentControls.items[0].clear();
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
     
-        // Queue: remove references to the content control collection.
-//        ctx.references.remove(contentControls);
-        
-        // Run the batch of commands in the queue.
-        return ctx.executeAsync().then(
-           function () {
-               console.log("Cleared the contents of the first content control.");
-           }
-        )
-    })
+    // Create a proxy object for the content controls collection.
+    var contentControls = context.document.contentControls;
+    
+    // Queue a commmand to get the first content control in the document.
+    // Create a proxy object for a content control.
+    var contentControl = contentControls.getItem(0);
+     
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        if (contentControl === null) {
+            console.log("There isn't a content control in this document.");
+        } else {
+            // Queue a command to clear the contents of the content control.
+            contentControl.clear();
+            // Synchronize the document state by executing the queued-up commands, 
+            // and return a promise to indicate task completion.
+            return context.sync().then(function () {
+                console.log('Content control cleared of contents.');
+            });      
+        }
+            
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

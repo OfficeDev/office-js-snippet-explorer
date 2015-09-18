@@ -6,15 +6,15 @@ Word.run(function (ctx) {
     // Create a proxy object for the document.
     var thisDocument = ctx.document;
 
-    // Queue a commmand to load the document save state.
-    ctx.load(thisDocument, { select: 'saved'});    
+    // Queue a commmand to load the document save state (on the saved property).
+    ctx.load(thisDocument, 'saved');    
     
     // Synchronize the document state by executing the queued-up commands, 
     // and return a promise to indicate task completion.
     return ctx.sync().then(function () {
         
         if (thisDocument.saved === false) {
-            // Queue: save this document.
+            // Queue a command to save this document.
             thisDocument.save();
             
             // Synchronize the document state by executing the queued-up commands, 

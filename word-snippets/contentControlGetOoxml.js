@@ -1,34 +1,39 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get all of the content controls in the document body.
-var contentControls = ctx.document.body.contentControls;
-
-// Queue: load the text property for all of content controls. 
-ctx.load(contentControls, { select: "text" });
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
     
+    // Create a proxy object for the content controls collection.
+    var contentControls = context.document.contentControls;
+    
+    // Queue a command to load the id property for all of the content controls. 
+    context.load(contentControls, 'id');
+     
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
         if (contentControls.items.length === 0) {
             console.log('No content control found.');
         }
         else {
-            // Queue: get the OOXML for the first content control. 
-            var ooxmlContent = contentControls.items[0].getOoxml();
-            
-            // Run the batch of commands in the queue.
-            ctx.executeAsync()
+            // Queue a command to get the OOXML contents of the first content control.
+            var ooxml = contentControls.items[0].getOoxml();
+        
+            // Synchronize the document state by executing the queued-up commands, 
+            // and return a promise to indicate task completion.
+            return context.sync()
                 .then(function () {
-                    console.log('First content control OOXML: ' + ooxmlContent.value);    
+                    console.log('Content control OOXML: ' + ooxml.value);
             });
         }
-    })
-
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

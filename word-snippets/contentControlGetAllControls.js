@@ -1,25 +1,31 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get all of the content controls in the document body.
-var contentControls = ctx.document.body.contentControls;
-
-// Queue: load the text property for all of content controls. 
-ctx.load(contentControls, { select: "text" });
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-
-        // Show the length of the text property for each content control.
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a proxy object for the content controls collection.
+    var contentControls = context.document.contentControls;
+    
+    // Queue a command to load the id property for all of content controls. 
+    context.load(contentControls, 'id');
+     
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        // Show the id property for each content control.
         for (var i = 0; i < contentControls.items.length; i++) {
-            console.log("contentControl[" + i + "].length = " +
-                        contentControls.items[i].text.length);
+            console.log("contentControl[" + i + "].id = " +
+                        contentControls.items[i].id);
         }
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
+
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

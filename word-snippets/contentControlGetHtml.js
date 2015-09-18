@@ -1,34 +1,39 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get all of the content controls in the document body.
-var contentControls = ctx.document.body.contentControls;
-
-// Queue: load the text property for all of content controls. 
-ctx.load(contentControls, { select: "text" });
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
     
-        if (contentControls.items.length === 0) {
+    // Create a proxy object for the content controls collection that contains a specific tag.
+    var contentControlsWithTag = context.document.contentControls.getByTag('Customer-Address');
+    
+    // Queue a command to load the tag property for all of content controls. 
+    context.load(contentControlsWithTag, 'tag');
+     
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        if (contentControlsWithTag.items.length === 0) {
             console.log('No content control found.');
         }
         else {
-            // Queue: get the HTML for the first content control. 
-            var htmlContent = contentControls.items[0].getHtml();
-            
-            // Run the batch of commands in the queue.
-            ctx.executeAsync()
+            // Queue a command to get the HTML contents of the first content control.
+            var html = contentControlsWithTag.items[0].getHtml();
+        
+            // Synchronize the document state by executing the queued-up commands, 
+            // and return a promise to indicate task completion.
+            return context.sync()
                 .then(function () {
-                    console.log('First content control HTML: ' + htmlContent.value);    
+                    console.log('Content control HTML: ' + html.value);
             });
         }
-    })
-
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer

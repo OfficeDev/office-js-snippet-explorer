@@ -1,20 +1,26 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Queue: get the range object that represents the current selection.
-var selection = ctx.document.getSelection();
-
-// Queue: strikethrough the font of the current selection.
-selection.font.strikeThrough = true; 
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
-        console.log('The selection now has a strikethrough.')
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Create a range proxy object for the current selection.
+    var selection = context.document.getSelection();
+    
+    // Queue a commmand to strikethrough the font of the current selection.
+    selection.font.strikeThrough = true; 
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
+        console.log('The selection now has a strikethrough.');
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
