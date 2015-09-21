@@ -1,43 +1,41 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
-var ctx = new Word.RequestContext();
 
-// Setup the search options.
-var options = Word.SearchOptions.newObject(ctx);
-options.matchSuffix = true;
+// Run a batch operation against the Word object model.
+Word.run(function (context) {
+    
+    // Setup the search options.
+    var options = Word.SearchOptions.newObject(context);
+    options.matchSuffix = true;
 
-// Queue: search the document for any string of characters after 'to'.
-var searchResults = ctx.document.body.search('ly', options);
+    // Queue a command to search the document for any string of characters after 'ly'.
+    var searchResults = context.document.body.search('ly', options);
 
-// Queue: load the results and get the font property values.
-ctx.load(searchResults, { expand: 'font' });
-
-// Queue: add a reference to the search results collection.
-ctx.references.add(searchResults);
-
-// Run the batch of commands in the queue.
-ctx.executeAsync()
-    .then(function () {
+    // Queue a command to load the search results and get the font property values.
+    context.load(searchResults, 'font');
+    
+    // Synchronize the document state by executing the queued-up commands, 
+    // and return a promise to indicate task completion.
+    return context.sync().then(function () {
         console.log('Found count: ' + searchResults.items.length);
 
-        // Queue: change the font for each found item.
+        // Queue a set of commands to change the font for each found item.
         for (var i = 0; i < searchResults.items.length; i++) {
             searchResults.items[i].font.color = 'orange';
             searchResults.items[i].font.highlightColor = 'black';
             searchResults.items[i].font.bold = true;
         }
-
-        // Queue: remove the reference to the search results.
-        ctx.references.remove(searchResults);
-    })
-
-    // Run the batch of commands in the queue.
-    .then(ctx.executeAsync)
-    .then(function () {
-        console.log('Highlighted the search results.');
-    })
-    .catch(function (error) {
-        console.log(JSON.stringify(error));
-    });
+        
+        // Synchronize the document state by executing the queued-up commands, 
+        // and return a promise to indicate task completion.
+        return context.sync();
+    });  
+})
+.catch(function (error) {
+    console.log('Error: ' + JSON.stringify(error));
+    if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+    }
+});
 
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
