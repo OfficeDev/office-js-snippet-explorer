@@ -6,18 +6,19 @@ Word.run(function (context) {
     // Create a proxy object for the content controls collection.
     var contentControls = context.document.contentControls;
     
-    // Queue a commmand to get the first content control in the document.
-    // Create a proxy object for a content control.
-    var contentControl = contentControls.getItem(0);
+    // Queue a command to load the content controls collection.
+    contentControls.load('text');
      
     // Synchronize the document state by executing the queued-up commands, 
     // and return a promise to indicate task completion.
     return context.sync().then(function () {
-        if (contentControl === null) {
+        
+        if (contentControls.items.length === 0) {
             console.log("There isn't a content control in this document.");
         } else {
-            // Queue a command to clear the contents of the content control.
-            contentControl.clear();
+            
+            // Queue a command to clear the contents of the first content control.
+            contentControls.items[0].clear();
             // Synchronize the document state by executing the queued-up commands, 
             // and return a promise to indicate task completion.
             return context.sync().then(function () {
