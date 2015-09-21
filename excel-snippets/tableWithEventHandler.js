@@ -4,8 +4,8 @@ Excel.run(function (ctx) {
     var table = ctx.workbook.tables.add("Sheet1!A1:C4", true).load("name");
     return ctx.sync()
         .then(function() {
-            Office.context.document.bindings.addFromNamedItemAsync(table.name, Office.CoercionType.Table, { id: "myBinding" }, function (asyncResult) {
-                if (asyncResult.status == "failed") {
+            Office.context.document.bindings.addFromNamedItemAsync(table.name, Office.BindingType.Table, { id: "myBinding" }, function (asyncResult) {
+                if (asyncResult.status == Office.AsyncResultStatus.Failed) {
                     console.log("Action failed with error: " + asyncResult.error.message)
                 } else {
                     // If succeeded, then add event handler to the table binding.
