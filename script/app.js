@@ -68,7 +68,8 @@ officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams
 	CodeEditorIntegration.initializeJsEditor('TxtRichApiScript', [
 			"/editorIntelliSense/ExcelLatest.txt",
 			"/editorIntelliSense/WordLatest.txt",
-			"/editorIntelliSense/Office.Runtime.txt"
+			"/editorIntelliSense/OfficeCommon.txt",
+			"/editorIntelliSense/OfficeDocument.txt"
 	]);
 	
 	CodeEditorIntegration.setDirty = function() {

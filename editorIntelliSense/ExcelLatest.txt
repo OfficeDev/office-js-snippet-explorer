@@ -1,3 +1,12 @@
+/* Version: 16.0.6216.3006 */
+/*
+	Copyright (c) Microsoft Corporation.  All rights reserved.
+*/
+
+/*
+	Your use of this file is governed by the Microsoft Services Agreement http://go.microsoft.com/fwlink/?LinkId=266419.
+*/
+
 declare module Excel {
     /**
      *
@@ -17,14 +26,10 @@ declare module Excel {
          * @param calculationType Specifies the calculation type to use. See Excel.CalculationType for details.
          */
         calculate(calculationType: string): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Application;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Application;
     }
     /**
      *
@@ -67,19 +72,10 @@ declare module Excel {
          *
          */
         getSelectedRange(): Excel.Range;
-        _GetObjectByReferenceId(bstrReferenceId: string): OfficeExtension.ClientResult<any>;
-        _GetObjectTypeNameByReferenceId(bstrReferenceId: string): OfficeExtension.ClientResult<string>;
-        _GetReferenceCount(): OfficeExtension.ClientResult<number>;
-        _RemoveAllReferences(): void;
-        _RemoveReference(bstrReferenceId: string): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Workbook;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Workbook;
     }
     /**
      *
@@ -155,14 +151,10 @@ declare module Excel {
          *
          */
         getUsedRange(): Excel.Range;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Worksheet;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Worksheet;
     }
     /**
      *
@@ -189,17 +181,13 @@ declare module Excel {
          *
          * Gets a worksheet object using its Name or ID.
          *
-         * @param index The Name or ID of the worksheet.
+         * @param key The Name or ID of the worksheet.
          */
         getItem(key: string): Excel.Worksheet;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.WorksheetCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.WorksheetCollection;
     }
     /**
      *
@@ -297,7 +285,6 @@ declare module Excel {
          * Represents the raw values of the specified range. The data returned could be of type string, number, or a boolean. Cell that contain an error will return the error string.
          */
         values: Array<Array<any>>;
-        _ReferenceId: string;
         /**
          *
          * Clear range values, format, fill, border, etc.
@@ -405,16 +392,10 @@ declare module Excel {
          *
          */
         select(): void;
-        _KeepReference(): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Range;
-        _initReferenceId(value: string): void;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Range;
     }
     /**
      *
@@ -431,14 +412,10 @@ declare module Excel {
          * @param name nameditem name.
          */
         getItem(name: string): Excel.NamedItem;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.NamedItemCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.NamedItemCollection;
     }
     /**
      *
@@ -470,21 +447,16 @@ declare module Excel {
          * Specifies whether the object is visible or not.
          */
         visible: boolean;
-        _Id: string;
         /**
          *
          * Returns the range object that is associated with the name. Throws an exception if the named item's type is not a range.
          *
          */
         getRange(): Excel.Range;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.NamedItem;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.NamedItem;
     }
     /**
      *
@@ -521,14 +493,10 @@ declare module Excel {
          *
          */
         getText(): OfficeExtension.ClientResult<string>;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Binding;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Binding;
     }
     /**
      *
@@ -558,14 +526,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.Binding;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.BindingCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.BindingCollection;
     }
     /**
      *
@@ -593,7 +557,7 @@ declare module Excel {
          *
          * Gets a table by Name or ID.
          *
-         * @param id Name or ID of the table to be retrieved.
+         * @param key Name or ID of the table to be retrieved.
          */
         getItem(key: number | string): Excel.Table;
         /**
@@ -603,14 +567,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.Table;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.TableCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.TableCollection;
     }
     /**
      *
@@ -689,14 +649,10 @@ declare module Excel {
          *
          */
         getTotalRowRange(): Excel.Range;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Table;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Table;
     }
     /**
      *
@@ -724,7 +680,7 @@ declare module Excel {
          *
          * Gets a column object by Name or ID.
          *
-         * @param id Column Name or ID.
+         * @param key Column Name or ID.
          */
         getItem(key: number | string): Excel.TableColumn;
         /**
@@ -734,14 +690,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.TableColumn;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.TableColumnCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.TableColumnCollection;
     }
     /**
      *
@@ -802,14 +754,10 @@ declare module Excel {
          *
          */
         getTotalRowRange(): Excel.Range;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.TableColumn;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.TableColumn;
     }
     /**
      *
@@ -840,14 +788,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.TableRow;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.TableRowCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.TableRowCollection;
     }
     /**
      *
@@ -878,14 +822,10 @@ declare module Excel {
          *
          */
         getRange(): Excel.Range;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.TableRow;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.TableRow;
     }
     /**
      *
@@ -928,14 +868,10 @@ declare module Excel {
          * Indicates if Excel wraps the text in the object. A null value indicates that the entire range doesn't have uniform wrap setting
          */
         wrapText: boolean;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.RangeFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.RangeFormat;
     }
     /**
      *
@@ -954,14 +890,10 @@ declare module Excel {
          *
          */
         clear(): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.RangeFill;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.RangeFill;
     }
     /**
      *
@@ -992,14 +924,10 @@ declare module Excel {
          * Specifies the weight of the border around a range. See Excel.BorderWeight for details.
          */
         weight: string;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.RangeBorder;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.RangeBorder;
     }
     /**
      *
@@ -1029,14 +957,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.RangeBorder;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.RangeBorderCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.RangeBorderCollection;
     }
     /**
      *
@@ -1079,14 +1003,10 @@ declare module Excel {
          * Type of underline applied to the font. See Excel.RangeUnderlineStyle for details.
          */
         underline: string;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.RangeFont;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.RangeFont;
     }
     /**
      *
@@ -1125,15 +1045,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.Chart;
-        _GetItem(id: string): Excel.Chart;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartCollection;
     }
     /**
      *
@@ -1207,7 +1122,6 @@ declare module Excel {
          * Represents the width, in points, of the chart object.
          */
         width: number;
-        _Id: string;
         /**
          *
          * Deletes the chart object.
@@ -1230,14 +1144,10 @@ declare module Excel {
          * @param endCell (Optional) The end cell. If specified, the chart's width and height will be set to fully cover up this cell/range.
          */
         setPosition(startCell: Excel.Range | string, endCell?: Excel.Range | string): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.Chart;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.Chart;
     }
     /**
      *
@@ -1256,14 +1166,10 @@ declare module Excel {
          * Represents the font attributes (font name, font size, color, etc.) for the current object. Read-only.
          */
         font: Excel.ChartFont;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAreaFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartAreaFormat;
     }
     /**
      *
@@ -1286,14 +1192,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.ChartSeries;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartSeriesCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartSeriesCollection;
     }
     /**
      *
@@ -1318,14 +1220,10 @@ declare module Excel {
          * Represents the name of a series in a chart.
          */
         name: string;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartSeries;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartSeries;
     }
     /**
      *
@@ -1344,14 +1242,10 @@ declare module Excel {
          * Represents line formatting. Read-only.
          */
         line: Excel.ChartLineFormat;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartSeriesFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartSeriesFormat;
     }
     /**
      *
@@ -1374,14 +1268,10 @@ declare module Excel {
          * @param index Index value of the object to be retrieved. Zero-indexed.
          */
         getItemAt(index: number): Excel.ChartPoint;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartPointsCollection;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartPointsCollection;
     }
     /**
      *
@@ -1400,14 +1290,10 @@ declare module Excel {
          * Returns the value of a chart point. Read-only.
          */
         value: any;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartPoint;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartPoint;
     }
     /**
      *
@@ -1420,14 +1306,10 @@ declare module Excel {
          * Represents the fill format of a chart, which includes background formating information. Read-only.
          */
         fill: Excel.ChartFill;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartPointFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartPointFormat;
     }
     /**
      *
@@ -1452,14 +1334,10 @@ declare module Excel {
          * Represents the value axis in an axis. Read-only.
          */
         valueAxis: Excel.ChartAxis;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxes;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartAxes;
     }
     /**
      *
@@ -1514,14 +1392,10 @@ declare module Excel {
          * Represents the interval between two minor tick marks. "Can be set to a numeric value or an empty string (for automatic axis values). The returned value is always a number.
          */
         minorUnit: any;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxis;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartAxis;
     }
     /**
      *
@@ -1540,14 +1414,10 @@ declare module Excel {
          * Represents chart line formatting. Read-only.
          */
         line: Excel.ChartLineFormat;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxisFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartAxisFormat;
     }
     /**
      *
@@ -1572,14 +1442,10 @@ declare module Excel {
          * A boolean that specifies the visibility of an axis title.
          */
         visible: boolean;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxisTitle;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartAxisTitle;
     }
     /**
      *
@@ -1592,14 +1458,10 @@ declare module Excel {
          * Represents the font attributes, such as font name, font size, color, etc. of chart axis title object. Read-only.
          */
         font: Excel.ChartFont;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartAxisTitleFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartAxisTitleFormat;
     }
     /**
      *
@@ -1660,14 +1522,10 @@ declare module Excel {
          * Boolean value representing if the data label value is visible or not.
          */
         showValue: boolean;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartDataLabels;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartDataLabels;
     }
     /**
      *
@@ -1686,14 +1544,10 @@ declare module Excel {
          * Represents the font attributes (font name, font size, color, etc.) for a chart data label. Read-only.
          */
         font: Excel.ChartFont;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartDataLabelFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartDataLabelFormat;
     }
     /**
      *
@@ -1712,14 +1566,10 @@ declare module Excel {
          * Boolean value representing if the axis gridlines are visible or not.
          */
         visible: boolean;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartGridlines;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartGridlines;
     }
     /**
      *
@@ -1732,14 +1582,10 @@ declare module Excel {
          * Represents chart line formatting. Read-only.
          */
         line: Excel.ChartLineFormat;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartGridlinesFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartGridlinesFormat;
     }
     /**
      *
@@ -1770,14 +1616,10 @@ declare module Excel {
          * A boolean value the represents the visibility of a ChartLegend object.
          */
         visible: boolean;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartLegend;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartLegend;
     }
     /**
      *
@@ -1796,14 +1638,10 @@ declare module Excel {
          * Represents the font attributes such as font name, font size, color, etc. of a chart legend. Read-only.
          */
         font: Excel.ChartFont;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartLegendFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartLegendFormat;
     }
     /**
      *
@@ -1834,14 +1672,10 @@ declare module Excel {
          * A boolean value the represents the visibility of a chart title object.
          */
         visible: boolean;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartTitle;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartTitle;
     }
     /**
      *
@@ -1860,14 +1694,10 @@ declare module Excel {
          * Represents the font attributes (font name, font size, color, etc.) for an object. Read-only.
          */
         font: Excel.ChartFont;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartTitleFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartTitleFormat;
     }
     /**
      *
@@ -1887,14 +1717,10 @@ declare module Excel {
          * @param color HTML color code representing the color of the border line, of the form #RRGGBB (e.g. "FFA500") or as a named HTML color (e.g. "orange").
          */
         setSolidColor(color: string): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartFill;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartFill;
     }
     /**
      *
@@ -1913,14 +1739,10 @@ declare module Excel {
          *
          */
         clear(): void;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartLineFormat;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartLineFormat;
     }
     /**
      *
@@ -1963,14 +1785,10 @@ declare module Excel {
          * Type of underline applied to the font. See Excel.ChartUnderlineStyle for details.
          */
         underline: string;
-        /** Handle results returned from the document
-         * @private
-         */
-        _handleResult(value: any): void;
         /**
-         * Load properties
+         * Queues up a command to load the specified properties of the object. You must call "context.sync()" before reading the properties.
          */
-        load(option?: string | OfficeExtension.LoadOption): Excel.ChartFont;
+        load(option?: string | string[] | OfficeExtension.LoadOption): Excel.ChartFont;
     }
     module BindingType {
         var range: string;
@@ -2195,10 +2013,17 @@ declare module Excel {
     }
 }
 declare module Excel {
+    /**
+     * The RequestContext object facilitates requests to the Excel application. Since the Office add-in and the Excel application run in two different processes, the request context is required to get access to the Excel object model from the add-in.
+     */
     class RequestContext extends OfficeExtension.ClientRequestContext {
         private m_workbook;
         constructor(url?: string);
         workbook: Workbook;
     }
-    function run<T>(batch: (ctx: Excel.RequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>;
+    /**
+     * Executes a batch script that performs actions on the Excel object model. When the promise is resolved, any tracked objects that were automatically allocated during execution will be released.
+     * @param batch - A function that takes in an Excel.RequestContext and returns a promise (typically, just the result of "context.sync()"). The context parameter facilitates requests to the Excel application. Since the Office add-in and the Excel application run in two different processes, the request context is required to get access to the Excel object model from the add-in.
+     */
+    function run<T>(batch: (context: Excel.RequestContext) => OfficeExtension.IPromise<T>): OfficeExtension.IPromise<T>;
 }
