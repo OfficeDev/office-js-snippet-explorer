@@ -1,8 +1,8 @@
 /*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 self.MonacoEnvironment = {
-	baseUrl: 'https://robmhoward.github.io/excel/script/'
+	baseUrl: '//officesnippetide.azurewebsites.net/script/'
 };
-importScripts('https://robmhoward.github.io/excel/script/vs/base/worker/workerMain.js');
+importScripts('//officesnippetide.azurewebsites.net/script/vs/base/worker/workerMain.js');
 /*
 OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 
