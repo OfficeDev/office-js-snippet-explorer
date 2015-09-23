@@ -1,12 +1,8 @@
 // Run a batch operation against the Word object model.
 Word.run(function (context) {
-    
-    // Setup the search options.
-    var options = Word.SearchOptions.newObject(context);
-    options.matchSuffix = true;
 
     // Queue a command to search the document for any string of characters after 'ly'.
-    var searchResults = context.document.body.search('ly', options);
+    var searchResults = context.document.body.search('ly', {matchSuffix: true});
 
     // Queue a command to load the search results and get the font property values.
     context.load(searchResults, 'font');
