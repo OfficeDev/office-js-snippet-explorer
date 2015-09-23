@@ -1,4 +1,3 @@
-/*Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.*/
 var officeJsSnippetApp = angular.module("officeJsSnippetApp", ['ngRoute']);
 var insideOffice = false;
 var consoleErrorFunction;
@@ -43,7 +42,7 @@ officeJsSnippetApp.config(['$routeProvider', function ($routeProvider) {
 				controller: 'TestAllController',
 				templateUrl: 'partials/testAll.html'
 			})
-		.otherwise({redirectTo: '/snippets/excel' });
+		.otherwise({redirectTo: '/add-in/excel' });
 }]);
 
 officeJsSnippetApp.factory("snippetFactory", ['$http', function ($http) {
@@ -68,7 +67,8 @@ officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams
 	CodeEditorIntegration.initializeJsEditor('TxtRichApiScript', [
 			"/editorIntelliSense/ExcelLatest.txt",
 			"/editorIntelliSense/WordLatest.txt",
-			"/editorIntelliSense/Office.Runtime.txt"
+			"/editorIntelliSense/OfficeCommon.txt",
+			"/editorIntelliSense/OfficeDocument.txt"
 	]);
 	
 	CodeEditorIntegration.setDirty = function() {
@@ -86,17 +86,12 @@ officeJsSnippetApp.controller("SamplesController", function($scope, $routeParams
 	$scope.loadSampleCode = function() {
 		appInsights.trackEvent("SampleLoaded", {name:$scope.selectedSample.name});
 		snippetFactory.getSampleCode($routeParams["app"], $scope.selectedSample.filename).then(function (response) {
-            var rawCodeSnippet = addErrorHandlingIfNeeded(response.data);
-            $scope.selectedSample.code = removeLicenseText(rawCodeSnippet);
+            $scope.selectedSample.code = addErrorHandlingIfNeeded(response.data);
 			$scope.insideOffice = insideOffice;
 			CodeEditorIntegration.setJavaScriptText($scope.selectedSample.code);
 			CodeEditorIntegration.resizeEditor();
 		});
 	};
-    
-    function removeLicenseText(rawCodeSnippet) {
-        return rawCodeSnippet.replace(/(\/\*([\s\S]*?)\*\/)|(\/\/(.*)$)/g, '');  
-    }
 	
 	$scope.runSelectedSample = function() {
 		var script = CodeEditorIntegration.getJavaScriptToRun().replace(/console.log/g, "logComment");
@@ -203,29 +198,4 @@ function isTrulyJavaScript(text) {
 		return false;
 	}
 }
-/*
-OfficeJS Snippet Explorer, https://github.com/OfficeDev/office-js-snippet-explorer
 
-Copyright (c) Microsoft Corporation
-All rights reserved.
-
-MIT License:
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
