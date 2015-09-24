@@ -181,7 +181,11 @@ function addDeferredErrorHandling(sampleCode) {
 }
 
 function addErrorHandling(sampleCode) {
-	return sampleCode.replace("ctx.executeAsync().then();", "ctx.executeAsync().then(function() {\r\n    console.log(\"done\");\r\n}, function(error) {\r\n    console.log(\"An error occurred: \" + error.errorCode + \":\" + error.errorMessage);\r\n});");
+	if (sampleCode.indexOf(".catch(") < 0) {
+		return sampleCode.replace("});", "}).catch(function(error) {\r\n    console.log(\"Error: \" + error);\r\n    if (error instanceof OfficeExtension.Error) {\r\n        console.log(\"Debug info: \" + JSON.stringify(error.debugInfo));\r\n    }\r\n});");
+	} else {
+		return sampleCode;
+	}
 }
 
 function addErrorHandlingIfNeeded(sampleCode) {
