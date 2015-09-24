@@ -182,7 +182,7 @@ function addDeferredErrorHandling(sampleCode) {
 
 function addErrorHandling(sampleCode) {
 	if (sampleCode.indexOf(".catch(") < 0) {
-		return sampleCode.replace("});", "}).catch(function(error) {\r\n    console.log(\"Error: \" + error);\r\n    if (error instanceof OfficeExtension.Error) {\r\n        console.log(\"Debug info: \" + JSON.stringify(error.debugInfo));\r\n    }\r\n});");
+		return sampleCode.replace("\r\n});", "\r\n}).catch(function(error) {\r\n    console.log(\"Error: \" + error);\r\n    if (error instanceof OfficeExtension.Error) {\r\n        console.log(\"Debug info: \" + JSON.stringify(error.debugInfo));\r\n    }\r\n});");
 	} else {
 		return sampleCode;
 	}
