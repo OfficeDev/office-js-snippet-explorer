@@ -16,4 +16,6 @@ Excel.run(function (ctx) {
 			}	
 		})
 		.then(ctx.sync);
-});	
+}).catch(function (error) {
+	console.log(error);
+});

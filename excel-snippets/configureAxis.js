@@ -8,4 +8,6 @@ Excel.run(function (ctx) {
 	chart.axes.valueAxis.minorUnit = 0.2;
 
 	return ctx.sync();	
+}).catch(function (error) {
+	console.log(error);
 });

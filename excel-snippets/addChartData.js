@@ -20,4 +20,6 @@ Excel.run(function (ctx) {
 	dataRange.numberFormat = "#0";
 	
 	return ctx.sync();	
+}).catch(function (error) {
+	console.log(error);
 });

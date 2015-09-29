@@ -4,4 +4,6 @@ Excel.run(function (ctx) {
 	chart.title.format.font.bold = true; 
 	chart.title.format.font.color = "#FF0000";
 	return ctx.sync();		
+}).catch(function (error) {
+	console.log(error);
 });

@@ -12,4 +12,6 @@ Excel.run(function(ctx) {
 			range.values = vals;
 		})
 		.then(ctx.sync);	
+}).catch(function (error) {
+	console.log(error);
 });

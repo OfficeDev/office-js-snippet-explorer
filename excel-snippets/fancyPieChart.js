@@ -31,4 +31,6 @@ Excel.run(function (ctx) {
 	points.getItemAt(1).format.fill.setSolidColor("D87093");
 	
 	return ctx.sync();
+}).catch(function (error) {
+	console.log(error);
 });

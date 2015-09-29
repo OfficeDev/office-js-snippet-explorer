@@ -14,7 +14,7 @@ Excel.run(function (ctx) {
             });
         });
 }).catch(function (error) {
-    console.log(JSON.stringify(error));
+	console.log(error);
 });
 
 // when data in the table is changed, this event will be triggered.

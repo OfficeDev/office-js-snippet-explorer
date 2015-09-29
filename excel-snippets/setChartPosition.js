@@ -4,4 +4,6 @@ Excel.run(function (ctx) {
 	chart.top = 200;
 	chart.left = 200;
 	return ctx.sync();
+}).catch(function (error) {
+	console.log(error);
 });
