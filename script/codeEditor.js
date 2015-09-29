@@ -85,7 +85,6 @@ var CodeEditorIntegration;
     CodeEditorIntegration.resizeEditor = resizeEditor;
 
     function storeCurrentJSBuffer() {
-        console.log("storeCurrentJSBuffer");
         if (CodeEditorIntegration.setDirty) {
             CodeEditorIntegration.setDirty();
         }
