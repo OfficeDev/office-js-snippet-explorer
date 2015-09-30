@@ -1,8 +1,8 @@
 // Run a batch operation against the Word object model.
 Word.run(function (context) {
     
-    // Queue a command to search the document.
-    var searchResults = context.document.body.search('video', {ignorePunct: true});
+    // Queue a command to search the document and ignore punctuation.
+    var searchResults = context.document.body.search('video you', {ignorePunct: true});
 
     // Queue a command to load the search results and get the font property values.
     context.load(searchResults, 'font');

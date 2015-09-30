@@ -92,21 +92,20 @@ You will need to sign a [Contributor License Agreement](https://cla.microsoft.co
 
 This sample is open for pull requests to add snippets to this repository. You can add to the snippets in either the excel-snippets or word-snippets directories. Here's what you do to add a snippet:
 
-1. Create a JS file in the excel-snippets or word-snippets directory with a descriptive name. Take a look at the existing file names for ideas on how you should name the file.
-2. Add your snippet to the file.
-3. Open samples.json.
-4. Add an entry to the `values` array. Your entry will look like:
+1. Create a fork of this repository.
+2. Create a JS file in the excel-snippets or word-snippets directory with a descriptive name. Take a look at the existing file names for ideas on how you should name the file.
+3. Add your snippet to the file.
+4. Open samples.json.
+5. Add an entry to the `values` array. Your entry will look like:
 
     `{ "done": true, "filename": "YOURFILENAME", "name": "DISPLAYNAME", "group": "GROUPNAMEFROMGROUPS", "description": "ASIMPLEDESCRIPTION"}`
 
-5. Replace the value for the filename, name, group, and description fields with information that describes your snippet. The filename should take the form of {object}{method}{description}.js. The object name is required -- this makes the list of snippets easy to peruse. For example:
-
-    paragraphClear.js
-    rangeInsertText.js
-
-6. Save all of your changes, test it, and open your pull request.
+6. Replace the value for the filename, name, group, and description fields with information that describes your snippet. The filename should take the form of {object}{method}{description}.js. The object name is required -- this makes the list of snippets easy to peruse. For example: paragraphClear.js or rangeInsertText.js.
+7. Save all of your changes, test it, push it, and open your pull request.
 
 ## Additional resources
+
+Learn more about these APIs by [reading the documentation](https://github.com/OfficeDev/office-js-docs). 
 
 Visit [http://dev.office.com](http://dev.office.com) for all your Office 365 Development needs
 - Get started with Office 365 development at [http://dev.office.com/getting-started](http://dev.office.com/getting-started)
