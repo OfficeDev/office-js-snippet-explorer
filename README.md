@@ -25,9 +25,9 @@ Do the following steps to run this sample in Excel 2016:
       <DefaultLocale>EN-US</DefaultLocale>
       <DisplayName DefaultValue="excel-js-snippet-explorer"/>
       <Description DefaultValue="Contains snippets for ExcelJS."/>
-      <Capabilities>
-        <Capability Name="Workbook"/>
-      </Capabilities>
+      <Hosts>
+        <Host Name="Workbook"/>
+      </Hosts>
 
       <DefaultSettings>
         <SourceLocation DefaultValue="https://officesnippetexplorer.azurewebsites.net/#/add-in/excel"/>
@@ -65,9 +65,9 @@ Do the following steps to run this sample in Word 2016:
       <DefaultLocale>EN-US</DefaultLocale>
       <DisplayName DefaultValue="word-js-snippet-explorer"/>
       <Description DefaultValue="Contains snippets for WordJS."/>
-      <Capabilities>
-        <Capability Name="Document"/>
-      </Capabilities>
+      <Hosts>
+        <Host Name="Document"/>
+      </Hosts>
 
       <DefaultSettings>
         <SourceLocation DefaultValue="https://officesnippetexplorer.azurewebsites.net/#/add-in/word"/>
