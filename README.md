@@ -51,33 +51,8 @@ Do the following steps to run this sample in Excel 2016:
 
 Do the following steps to run this sample in Word 2016:
 
-1. Create a folder on a network share called `manifests`.
-2. Create a file called snippet-explorer-wordJS.xml and place the following content in it:
-
-    ```xml
-    <?xml version="1.0" encoding="utf-8"?>
-    <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:type="TaskPaneApp">
-      <Id>6492a0e5-b158-47da-9145-6804c67ed8d9</Id>
-      <Version>1.0</Version>
-      <ProviderName>Microsoft</ProviderName>
-      <DefaultLocale>EN-US</DefaultLocale>
-      <DisplayName DefaultValue="word-js-snippet-explorer"/>
-      <Description DefaultValue="Contains snippets for WordJS."/>
-      <Hosts>
-        <Host Name="Document"/>
-      </Hosts>
-
-      <DefaultSettings>
-        <SourceLocation DefaultValue="https://officesnippetexplorer.azurewebsites.net/#/add-in/word"/>
-
-      </DefaultSettings>
-      <Permissions>ReadWriteDocument</Permissions>
-    </OfficeApp>
-
-    ```
-3. Replace the guid in the `<id>` element with a guid you generate. Save the file. 
+1. Once you have cloned or downloaded the repo, create a folder on a network share called `manifests`.
+2. Save the snippet-explorer-wordJS.xml file in the network share. 
 4. Open Word 2016 with a new document.
 5. Select **File** > **Options** > **Trust Center** > **Trust Center Settings** > **Trusted Add-in Catalogs**.
 6. In the **Catalog Url** field, add the url to the `manifests` folder you created on the network share. Select the **Add catalog** button.
@@ -86,6 +61,7 @@ Do the following steps to run this sample in Word 2016:
 9. Select the add-in named word-js-snippet-explorer and select **Insert**. The add-in will load.
 10. You can now run the code samples. We suggest that you play with the snippets in the code editor  to see what you can do with WordJS.
 
+>**Note**: You might need to close and reopen Word in order for the add-in to show.
 
 ## Contributing
 You will need to sign a [Contributor License Agreement](https://cla.microsoft.com) before submitting your pull request. To complete the Contributor License Agreement (CLA), you will need to submit a request via the form and then electronically sign the Contributor License Agreement when you receive the email containing the link to the document. 
