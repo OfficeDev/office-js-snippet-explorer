@@ -1,3 +1,6 @@
+[DEPRECATED] The Office JS Snippet Explorer is no longer supported. To get the latest snippets for Office-JS, we recommend developers to try the [Script Lab](https://store.office.com/en-001/app.aspx?assetid=WA104380862&ui=en-US&rs=en-001&ad=US&appredirect=false) add-in.
+
+
 # OfficeJS Snippet Explorer
 
 This Office Add-in sample uses Angular. It lets you explore and modify code snippets for ExcelJS and WordJS. You can browse the code snippets at these two locations:
