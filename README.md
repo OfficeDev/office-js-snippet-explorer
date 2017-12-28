@@ -58,6 +58,8 @@ This sample is open for pull requests to add snippets to this repository. You ca
 6. Replace the value for the filename, name, group, and description fields with information that describes your snippet. The filename should take the form of {object}{method}{description}.js. The object name is required -- this makes the list of snippets easy to peruse. For example: paragraphClear.js or rangeInsertText.js.
 7. Save all of your changes, test it, push it, and open your pull request.
 
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 ## Additional resources
 
 Learn more about these APIs by [reading the documentation](https://github.com/OfficeDev/office-js-docs). 
